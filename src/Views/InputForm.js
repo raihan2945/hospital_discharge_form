@@ -1,5 +1,5 @@
 import { Form, Label, Input, FormGroup, Row, Col, Button } from "reactstrap";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useId } from "react";
 import { useForm, Controller } from "react-hook-form";
 // import DatePicker from "react-bootstrap-date-picker";
 import { useReactToPrint } from "react-to-print";
@@ -14,11 +14,19 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import PrintPreview from "./PrintPreview";
 
+import _uniqueId from "lodash/uniqueId";
+
 const InputForm = () => {
   // ---states
-  const [initialDate, selectDate] = useState(new Date());
 
-  const [discharegeId, setDischargeId] = useState(uuidv1());
+  function randomNumberInRange(min, max) {
+    // 👇️ get number between min (inclusive) and max (inclusive)
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  const [initialDate, selectDate] = useState();
+
+  const [discharegeId, setDischargeId] = useState(randomNumberInRange(1, 10));
+
   const [patientName, setPatientName] = useState("");
   const [patientPhone, setPatientPhone] = useState("");
   const [patinetGender, setPatientGender] = useState("");
@@ -83,6 +91,11 @@ const InputForm = () => {
     console.log("data is :", data);
   };
 
+  // const d_id = useId();
+
+  // useEffect(() => {
+  //   setDischargeId(d_id);
+  // }, []);
 
   // ------------MEDICATION-----------
 
@@ -117,16 +130,18 @@ const InputForm = () => {
     setDischareMedication(defaultMedication);
   };
 
-
   // ----------INVESTIGATION---------
 
-  const addInvestigation = (input)=>{
-    setInvestigation([...investigation, {
-      name: input,
-      value:"",
-      ml:""
-    }])
-  }
+  const addInvestigation = (input) => {
+    setInvestigation([
+      ...investigation,
+      {
+        name: input,
+        value: "",
+        ml: "",
+      },
+    ]);
+  };
 
   const changeInvestigation = (e, property, index) => {
     // console.log("text is : ", e, index);
@@ -141,11 +156,8 @@ const InputForm = () => {
     } else if (property === "ml") {
       newInvestigation[index].ml = e;
       setInvestigation(newInvestigation);
-    } 
+    }
   };
-
-
-
 
   // console.log("Dischage Medicare is  : ", dischargeMedication);
   // console.log("chief complaint is  : ", chiefComplaint);
@@ -189,26 +201,30 @@ const InputForm = () => {
           />
         </div>
 
+        <h4 style={{ marginTop: "1.5rem" }}>Discharge Summery</h4>
+
         <hr style={{ margin: "1rem 0rem" }} />
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Row>
             <Col md={12}>
               <FormGroup>
-                <div style={{ textAlign: "start", margin: ".5rem 0rem" }}>
+                <div style={{ textAlign: "start", margin: ".5rem 0rem", display:'flex', gap:'1rem'}}>
                   <label style={{ textAlign: "start" }}>Discharge ID :</label>
+                  <p style={{fontWeight:"bold"}}>{discharegeId}</p>
                 </div>
 
-                <Input
+                {/* <Input
                   id="discharege_id"
                   name="discharege_id"
                   // placeholder="12345"
-                  value={discharegeId}
+                  // value={discharegeId}
+                  placeholder={discharegeId}
                   type="discharege_id"
-                  disabled
+                  // disabled
                   // {...register("discharege_id")}
                   // value={patientName}
-                />
+                /> */}
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -220,7 +236,7 @@ const InputForm = () => {
                 <Input
                   id="patient_name"
                   name="patient_name"
-                  placeholder="patient_name"
+                  placeholder="Name"
                   type="text"
                   // {...register("patient_name")}
                   value={patientName}
@@ -236,7 +252,7 @@ const InputForm = () => {
 
                 <Input
                   id="patient_phone"
-                  name="patient_phone"
+                  name="Phone"
                   placeholder="patient_phone"
                   type="text"
                   // {...register("patient_phone")}
@@ -387,8 +403,9 @@ const InputForm = () => {
                 <DatePicker
                   id="datepicker"
                   selected={dateOfAdmission}
-                  onChange={setDateOfAdmission}
-                  formate="dd-mm-yyyy"
+                  onChange={(e) => setDateOfAdmission(e)}
+                  // dateFormat="yyyy/MM/dd"
+                  dateFormat="dd/MM/yyyy"
                 />
               </FormGroup>
             </Col>
@@ -404,8 +421,8 @@ const InputForm = () => {
                 <DatePicker
                   id="datepicker"
                   selected={dateOfDischarge}
-                  onChange={setDateOfDischarge}
-                  formate="dd-mm-yyyy"
+                  onChange={(e) => setDateOfDischarge(e)}
+                  dateFormat="dd/MM/yyyy"
                 />
               </FormGroup>
             </Col>
@@ -760,8 +777,9 @@ const InputForm = () => {
                   class="form-select"
                   aria-label="Default select example"
                 >
-                  
-                  <option disabled selected>Select a value</option>
+                  <option disabled selected>
+                    Select a value
+                  </option>
                   <option value="ARC 1">ARC 1</option>
                   <option value="ARC 2">ARC 2</option>
                 </select>
@@ -769,7 +787,7 @@ const InputForm = () => {
             </Row>
             {investigation?.map((inv, index) => {
               return (
-                <Row style={{marginTop:".5rem"}}>
+                <Row style={{ marginTop: ".5rem" }}>
                   <Col md={4}>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                       <label style={{ textAlign: "start" }}>ARC :</label>
@@ -780,7 +798,9 @@ const InputForm = () => {
                       placeholder="ARC"
                       type="input"
                       value={inv.name}
-                      onChange={(e)=>changeInvestigation(e.target.value, "name", index)}
+                      onChange={(e) =>
+                        changeInvestigation(e.target.value, "name", index)
+                      }
                     />
                   </Col>
                   <Col md={4}>
@@ -793,7 +813,9 @@ const InputForm = () => {
                       placeholder="Value"
                       type="input"
                       value={inv.value}
-                      onChange={(e)=>changeInvestigation(e.target.value, "value", index)}
+                      onChange={(e) =>
+                        changeInvestigation(e.target.value, "value", index)
+                      }
                     />
                   </Col>
                   <Col md={4}>
@@ -806,7 +828,9 @@ const InputForm = () => {
                       placeholder="ML"
                       type="input"
                       value={inv.ml}
-                      onChange={(e)=>changeInvestigation(e.target.value, "ml", index)}
+                      onChange={(e) =>
+                        changeInvestigation(e.target.value, "ml", index)
+                      }
                     />
                   </Col>
                 </Row>
@@ -901,8 +925,8 @@ const InputForm = () => {
           contactPersonMobile={contactPersonMobile}
           wordNo={wordNo}
           modeOfAdmission={modeOfAdmission}
-          dateOfAdmission={dateOfAdmission}
-          dateOfDischarge={dateOfDischarge}
+          // dateOfAdmission={dateOfAdmission}
+          // dateOfDischarge={dateOfDischarge}
           primaryConsultant={primaryConsultant}
           primaryConsultantDepartment={primaryConsultantDepartment}
           othersConsultant={othersConsultant}
