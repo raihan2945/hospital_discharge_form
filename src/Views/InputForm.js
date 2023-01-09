@@ -456,7 +456,7 @@ const InputForm = () => {
                 <Input
                   id="department"
                   name="word_cabin_no"
-                  placeholder="Department"
+                  placeholder="Name"
                   type="text"
                   // {...register("word_cabin_no")}
                   value={primaryConsultantDepartment}
@@ -496,7 +496,7 @@ const InputForm = () => {
                 <Input
                   id="department"
                   name="word_cabin_no"
-                  placeholder="Department"
+                  placeholder="Name"
                   type="text"
                   // {...register("word_cabin_no")}
                   value={othersConsultantDepartment}
@@ -518,7 +518,7 @@ const InputForm = () => {
                 <Input
                   id="department"
                   name="word_cabin_no"
-                  placeholder="Primary Consult"
+                  placeholder=""
                   type="text"
                   // {...register("word_cabin_no")}
                   value={dcs}
