@@ -16,6 +16,8 @@ import PrintPreview from "./PrintPreview";
 
 import _uniqueId from "lodash/uniqueId";
 
+
+
 const InputForm = () => {
   // ---states
 
@@ -91,11 +93,46 @@ const InputForm = () => {
     console.log("data is :", data);
   };
 
-  // const d_id = useId();
-
-  // useEffect(() => {
-  //   setDischargeId(d_id);
-  // }, []);
+  const allDepartments = [
+    {
+      id:1,
+      name : "Surgery",
+      child:[
+        {
+          name:"Consultant 1"
+        },
+        {
+          name:"Consultant 2"
+        },
+      ]
+    },
+    {
+      id:2,
+      name : "Medicine",
+      child:[
+        {
+          name:"Consultant 3"
+        },
+        {
+          name:"Consultant 4"
+        },
+      ]
+    },
+    {
+      id:3,
+      name : "Cardiology",
+      child:[
+        {
+          name:"Consultant 5"
+        },
+        {
+          name:"Consultant 6"
+        },
+      ]
+    },
+  ]
+  
+  console.log("p department is : ", primaryConsultantDepartment)
 
   // ------------MEDICATION-----------
 
@@ -371,7 +408,7 @@ const InputForm = () => {
                 </select>
               </FormGroup>
             </Col>
-            <Col md={6}>
+            <Col md={12}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                   <label style={{ textAlign: "start" }}>
@@ -410,7 +447,7 @@ const InputForm = () => {
               </FormGroup>
             </Col>
             {/* --------------------------------- */}
-            <Col md={12}>
+            <Col md={6}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                   <label style={{ textAlign: "start" }}>
@@ -426,8 +463,32 @@ const InputForm = () => {
                 />
               </FormGroup>
             </Col>
+              {/* --------------------------------- */}
+                        <Col md={12}>
+              <FormGroup>
+                <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                  <label style={{ textAlign: "start" }}>Department :</label>
+                </div>
+
+                <select
+                  // value={primaryConsultantDepartment?.name}
+                  onChange={(e) => {
+                    const dep = allDepartments.find(d=> d.id == e.target.value)
+                    setPrimaryConsultantDepartment(dep)
+                  }}
+                  class="form-select"
+                  aria-label="Default select example"
+                >
+                  <option selected>Select Department</option>
+                  {allDepartments?.map(d=>{
+                    return <option value={d?.id}> {d?.name}</option>
+                  })}
+                </select>
+    
+              </FormGroup>
+            </Col>
             {/* --------------------------------- */}
-            <Col md={6}>
+            <Col md={12}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                   <label style={{ textAlign: "start" }}>
@@ -435,37 +496,23 @@ const InputForm = () => {
                   </label>
                 </div>
 
-                <Input
-                  id="word_cabin_no"
-                  name="word_cabin_no"
-                  placeholder="Primary Consultant"
-                  type="text"
-                  // {...register("word_cabin_no")}
+                <select
                   value={primaryConsultant}
                   onChange={(e) => setPrimaryConsultant(e.target.value)}
-                />
+                  class="form-select"
+                  aria-label="Default select example"
+                >
+                  <option selected>Select Primary Consultant</option>
+                  {/* <option value="Male">Consultant 1</option>
+                  <option value="Female">Consultant 2</option>
+                  <option value="Others">Consultant 3</option> */}
+                  {primaryConsultantDepartment?.child?.map(c=>{
+                   return <option value={c.name}>{c.name}</option> 
+                  })}
+                </select>
               </FormGroup>
             </Col>
-            {/* --------------------------------- */}
-            <Col md={6}>
-              <FormGroup>
-                <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>Department :</label>
-                </div>
 
-                <Input
-                  id="department"
-                  name="word_cabin_no"
-                  placeholder="Name"
-                  type="text"
-                  // {...register("word_cabin_no")}
-                  value={primaryConsultantDepartment}
-                  onChange={(e) =>
-                    setPrimaryConsultantDepartment(e.target.value)
-                  }
-                />
-              </FormGroup>
-            </Col>
             {/* --------------------------------- */}
             <Col md={6}>
               <FormGroup>
@@ -555,8 +602,9 @@ const InputForm = () => {
                 <DatePicker
                   id="datepicker"
                   selected={chiefComplaintDate}
-                  onChange={setChiefComplaintDate}
-                  formate="dd-mm-yyyy"
+                  onChange={(e) => setChiefComplaintDate(e)}
+                  dateFormat="dd/MM/yyyy"
+                  // formate="dd-mm-yyyy"
                 />
               </FormGroup>
             </Col>
@@ -638,13 +686,13 @@ const InputForm = () => {
             <Col md={12}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>Comment :</label>
+                  <label style={{ textAlign: "start" }}>Case summary:</label>
                 </div>
 
                 <Input
                   id="department"
                   name="word_cabin_no"
-                  placeholder="Comment"
+                  placeholder="Case summary"
                   type="textarea"
                   // {...register("word_cabin_no")}
                   value={commentBox}
@@ -713,8 +761,8 @@ const InputForm = () => {
                       </div>
                       <Input
                         id="department"
-                        name="word_cabin_no"
-                        placeholder="Brand/Geneic Name"
+                        name="duration"
+                        placeholder="Duration"
                         type="input"
                         // {...register("word_cabin_no")}
                         value={m.duration}
@@ -732,7 +780,7 @@ const InputForm = () => {
                       <Input
                         id="department"
                         name="word_cabin_no"
-                        placeholder="Brand/Geneic Name"
+                        placeholder="Note"
                         type="input"
                         // {...register("word_cabin_no")}
                         value={m.note}
@@ -928,12 +976,12 @@ const InputForm = () => {
           // dateOfAdmission={dateOfAdmission}
           // dateOfDischarge={dateOfDischarge}
           primaryConsultant={primaryConsultant}
-          primaryConsultantDepartment={primaryConsultantDepartment}
+          primaryConsultantDepartment={primaryConsultantDepartment?.name}
           othersConsultant={othersConsultant}
           othersConsultantDepartment={othersConsultantDepartment}
           dcs={dcs}
           // chiefComplaint ={chiefComplaint}
-          chiefComplaintDate={chiefComplaintDate}
+          // chiefComplaintDate={chiefComplaintDate}
           // diagnosisText ={diagnosisText}
           // diagnosisValue ={diagnosisValue}
           commentBox={commentBox}
