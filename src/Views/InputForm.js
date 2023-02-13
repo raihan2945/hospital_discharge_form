@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 // import DatePicker from "react-bootstrap-date-picker";
 import { useReactToPrint } from "react-to-print";
 
-import { v1 as uuidv1 } from 'uuid';
+import { v1 as uuidv1 } from "uuid";
 
 import Select from "react-select-plus";
 import "react-select-plus/dist/react-select-plus.css";
@@ -16,7 +16,119 @@ import PrintPreview from "./PrintPreview";
 
 import _uniqueId from "lodash/uniqueId";
 
-
+const allDepartments = [
+  {
+    id: 1,
+    name: "Department 1",
+    unit: [
+      {
+        id: "u1",
+        name: "Unit Red",
+        consultant: [
+          {
+            name: "Consultant 1",
+          },
+          {
+            name: "Consultant 2",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Department 2",
+    unit: [
+      {
+        id: "u2",
+        name: "Unit Blue",
+        consultant: [
+          {
+            name: "Consultant 3",
+          },
+          {
+            name: "Consultant 4",
+          },
+          {
+            name: "Consultant 5",
+          },
+        ],
+      },
+      {
+        id: "u3",
+        name: "Unit Green",
+        consultant: [
+          {
+            name: "Consultant 6",
+          },
+          {
+            name: "Consultant 7",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Department 3",
+    unit: [
+      {
+        id: "u2",
+        name: "Unit Orange",
+        consultant: [
+          {
+            name: "Consultant 8",
+          },
+          {
+            name: "Consultant 9",
+          },
+          {
+            name: "Consultant 10",
+          },
+        ],
+      },
+      {
+        id: "u3",
+        name: "Unit Green",
+        consultant: [
+          {
+            name: "Consultant 11",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "Department 4",
+    unit: [
+      {
+        id: "u2",
+        name: "Unit Yellow",
+        consultant: [
+          {
+            name: "Consultant 1",
+          },
+          {
+            name: "Consultant 2",
+          },
+        ],
+      },
+      {
+        id: "u3",
+        name: "Unit Green",
+        consultant: [
+          {
+            name: "Consultant 1",
+          },
+          {
+            name: "Consultant 2",
+          },
+        ],
+      },
+    ],
+  },
+];
 
 const InputForm = () => {
   // ---states
@@ -40,6 +152,8 @@ const InputForm = () => {
   const [modeOfAdmission, setModeOfAdmission] = useState();
   const [dateOfAdmission, setDateOfAdmission] = useState();
   const [dateOfDischarge, setDateOfDischarge] = useState();
+  const [physicalScience, setPhysicalScience] = useState([]);
+  const [primaryUnit, setPrimaryUnit] = useState();
   const [primaryConsultant, setPrimaryConsultant] = useState();
   const [primaryConsultantDepartment, setPrimaryConsultantDepartment] =
     useState();
@@ -93,46 +207,8 @@ const InputForm = () => {
     console.log("data is :", data);
   };
 
-  const allDepartments = [
-    {
-      id:1,
-      name : "Surgery",
-      child:[
-        {
-          name:"Consultant 1"
-        },
-        {
-          name:"Consultant 2"
-        },
-      ]
-    },
-    {
-      id:2,
-      name : "Medicine",
-      child:[
-        {
-          name:"Consultant 3"
-        },
-        {
-          name:"Consultant 4"
-        },
-      ]
-    },
-    {
-      id:3,
-      name : "Cardiology",
-      child:[
-        {
-          name:"Consultant 5"
-        },
-        {
-          name:"Consultant 6"
-        },
-      ]
-    },
-  ]
-  
-  console.log("p department is : ", primaryConsultantDepartment)
+  // console.log("unit is : ", primaryUnit)
+  // console.log("p department is : ", primaryConsultantDepartment);
 
   // ------------MEDICATION-----------
 
@@ -246,9 +322,16 @@ const InputForm = () => {
           <Row>
             <Col md={12}>
               <FormGroup>
-                <div style={{ textAlign: "start", margin: ".5rem 0rem", display:'flex', gap:'1rem'}}>
+                <div
+                  style={{
+                    textAlign: "start",
+                    margin: ".5rem 0rem",
+                    display: "flex",
+                    gap: "1rem",
+                  }}
+                >
                   <label style={{ textAlign: "start" }}>Discharge ID :</label>
-                  <p style={{fontWeight:"bold"}}>{discharegeId}</p>
+                  <p style={{ fontWeight: "bold" }}>{discharegeId}</p>
                 </div>
 
                 {/* <Input
@@ -463,54 +546,130 @@ const InputForm = () => {
                 />
               </FormGroup>
             </Col>
-              {/* --------------------------------- */}
-                        <Col md={12}>
-              <FormGroup>
-                <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>Department :</label>
-                </div>
-
-                <select
-                  // value={primaryConsultantDepartment?.name}
-                  onChange={(e) => {
-                    const dep = allDepartments.find(d=> d.id == e.target.value)
-                    setPrimaryConsultantDepartment(dep)
-                  }}
-                  class="form-select"
-                  aria-label="Default select example"
-                >
-                  <option selected>Select Department</option>
-                  {allDepartments?.map(d=>{
-                    return <option value={d?.id}> {d?.name}</option>
-                  })}
-                </select>
-    
-              </FormGroup>
-            </Col>
             {/* --------------------------------- */}
             <Col md={12}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>
-                    Primary Consultant:
-                  </label>
+                  <label style={{ textAlign: "start" }}>Physical science:</label>
                 </div>
 
-                <select
-                  value={primaryConsultant}
-                  onChange={(e) => setPrimaryConsultant(e.target.value)}
-                  class="form-select"
-                  aria-label="Default select example"
-                >
-                  <option selected>Select Primary Consultant</option>
-                  {/* <option value="Male">Consultant 1</option>
-                  <option value="Female">Consultant 2</option>
-                  <option value="Others">Consultant 3</option> */}
-                  {primaryConsultantDepartment?.child?.map(c=>{
-                   return <option value={c.name}>{c.name}</option> 
-                  })}
-                </select>
+                <Select.Creatable
+                  multi={true}
+                  name="form-field-name"
+                  value={physicalScience}
+                  onChange={(value) => setPhysicalScience(value)}
+                  options={[
+                    { value: "One", label: "One" },
+                    { value: "Two", label: "Two" },
+                  ]}
+                />
               </FormGroup>
+            </Col>
+            {/* --------------------------------- */}
+
+            <Col md={12}>
+              <div
+                className=""
+                style={{
+                  border: "1px solid #00CCFF",
+                  padding: "1rem",
+                  borderRadius: "5px",
+                  marginBottom: "1rem",
+                  backgroundColor: "#f5fdff",
+                }}
+              >
+                <Row>
+                  {/* <h1>hello</h1> */}
+                  <div style={{ marginBottom: ".5rem" }}>
+                    <h6>Select Primary Consultant</h6>
+                  </div>
+                  <Col md={primaryConsultantDepartment?.unit ? 6 : 12}>
+                    <FormGroup>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>
+                          Department :
+                        </label>
+                      </div>
+
+                      <select
+                        // value={primaryConsultantDepartment?.name}
+                        onChange={(e) => {
+                          const dep = allDepartments.find(
+                            (d) => d.id == e.target.value
+                          );
+                          setPrimaryConsultantDepartment(dep);
+                        }}
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option selected>Select Department</option>
+                        {allDepartments?.map((d) => {
+                          return <option value={d?.id}> {d?.name}</option>;
+                        })}
+                      </select>
+                    </FormGroup>
+                  </Col>
+                  {/* --------------------------------- */}
+
+                  {primaryConsultantDepartment?.unit && (
+                    <Col md={6}>
+                      <FormGroup>
+                        <div
+                          style={{ textAlign: "start", marginBottom: ".5rem" }}
+                        >
+                          <label style={{ textAlign: "start" }}>Unit :</label>
+                        </div>
+
+                        <select
+                          // value={primaryConsultantDepartment?.name}
+                          onChange={(e) => {
+                            const unit = primaryConsultantDepartment.unit.find(
+                              (d) => d.id == e.target.value
+                            );
+                            console.log("unit is : ", unit);
+                            setPrimaryUnit(unit);
+                          }}
+                          class="form-select"
+                          aria-label="Default select example"
+                        >
+                          <option selected>Select Unit</option>
+                          {primaryConsultantDepartment?.unit?.map((d) => {
+                            return <option value={d?.id}> {d?.name}</option>;
+                          })}
+                        </select>
+                      </FormGroup>
+                    </Col>
+                  )}
+                  {/* --------------------------------- */}
+                  {primaryUnit?.consultant && (
+                    <Col md={12}>
+                      <FormGroup>
+                        <div
+                          style={{ textAlign: "start", marginBottom: ".5rem" }}
+                        >
+                          <label style={{ textAlign: "start" }}>
+                            Primary Consultant:
+                          </label>
+                        </div>
+
+                        <select
+                          value={primaryConsultant}
+                          onChange={(e) => setPrimaryConsultant(e.target.value)}
+                          class="form-select"
+                          aria-label="Default select example"
+                        >
+                          <option selected>Select Primary Consultant</option>
+                          {primaryUnit?.consultant?.map((c) => {
+                            return <option value={c.name}>{c.name}</option>;
+                          })}
+                        </select>
+                      </FormGroup>
+                    </Col>
+                  )}
+                </Row>
+              </div>
             </Col>
 
             {/* --------------------------------- */}
@@ -975,8 +1134,8 @@ const InputForm = () => {
           modeOfAdmission={modeOfAdmission}
           // dateOfAdmission={dateOfAdmission}
           // dateOfDischarge={dateOfDischarge}
-          primaryConsultant={primaryConsultant}
           primaryConsultantDepartment={primaryConsultantDepartment?.name}
+          primaryConsultant={primaryConsultant}
           othersConsultant={othersConsultant}
           othersConsultantDepartment={othersConsultantDepartment}
           dcs={dcs}
