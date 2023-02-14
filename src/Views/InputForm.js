@@ -2,6 +2,7 @@ import { Form, Label, Input, FormGroup, Row, Col, Button } from "reactstrap";
 import React, { useEffect, useState, useRef, useId } from "react";
 import { useForm, Controller } from "react-hook-form";
 // import DatePicker from "react-bootstrap-date-picker";
+import { formatDistance } from "date-fns";
 import { useReactToPrint } from "react-to-print";
 
 import { v1 as uuidv1 } from 'uuid';
@@ -40,6 +41,7 @@ const InputForm = () => {
   const [modeOfAdmission, setModeOfAdmission] = useState();
   const [dateOfAdmission, setDateOfAdmission] = useState();
   const [dateOfDischarge, setDateOfDischarge] = useState();
+  const [totalDays, setTotalDays] = useState();
   const [primaryConsultant, setPrimaryConsultant] = useState();
   const [primaryConsultantDepartment, setPrimaryConsultantDepartment] =
     useState();
@@ -52,6 +54,21 @@ const InputForm = () => {
   const [diagnosisOption, setDiagnosisOption] = useState([]);
   // const [diagnosisValue, setDiagnosisValue] = useState();
   const [commentBox, setCommentBox] = useState();
+
+ let newDate =  new Date(dateOfDischarge).getTime() - new Date(dateOfAdmission).getTime()
+ var Difference_In_Days = newDate / (1000 * 3600 * 24);
+  // console.log("total days is : ", Difference_In_Days)
+
+  let defaultDrugTreatment = [
+    {
+      brandName: "",
+      doses: "",
+      duration: "",
+      note: "",
+    },
+  ];
+  const [drugTreatment, setDrugTreatment] =
+    useState(defaultDrugTreatment);
 
   let defaultMedication = [
     {
@@ -93,6 +110,109 @@ const InputForm = () => {
     console.log("data is :", data);
   };
 
+
+  
+  console.log("p department is : ", primaryConsultantDepartment)
+
+  // ------------MEDICATION-----------
+
+  const changeMedication = (e, property, index) => {
+    // console.log("text is : ", e, index);
+    const newDischargeMedication = [...dischargeMedication];
+
+    if (property === "brandName") {
+      newDischargeMedication[index].brandName = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "doses") {
+      newDischargeMedication[index].doses = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "duration") {
+      newDischargeMedication[index].duration = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "note") {
+      newDischargeMedication[index].note = e;
+      setDischareMedication(newDischargeMedication);
+    }
+  };
+
+  const addMedication = () => {
+    defaultMedication = [
+      ...dischargeMedication,
+      {
+        brandName: "",
+        doses: "",
+        duration: "",
+        note: "",
+      },
+    ];
+    setDischareMedication(defaultMedication);
+  };
+
+  //Drug treatment
+
+  const changeDrugTreatment = (e, property, index) => {
+    // console.log("text is : ", e, index);
+    const newDischargeMedication = [...drugTreatment];
+
+    if (property === "brandName") {
+      newDischargeMedication[index].brandName = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "doses") {
+      newDischargeMedication[index].doses = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "duration") {
+      newDischargeMedication[index].duration = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "note") {
+      newDischargeMedication[index].note = e;
+      setDischareMedication(newDischargeMedication);
+    }
+  };
+  const addDrugTreatment = () => {
+    defaultDrugTreatment = [
+      ...dischargeMedication,
+      {
+        brandName: "",
+        doses: "",
+        duration: "",
+        note: "",
+      },
+    ];
+    setDischareMedication(defaultDrugTreatment);
+  };
+
+  // ----------INVESTIGATION---------
+
+  const addInvestigation = (input) => {
+    setInvestigation([
+      ...investigation,
+      {
+        name: input,
+        value: "",
+        ml: "",
+      },
+    ]);
+  };
+
+  const changeInvestigation = (e, property, index) => {
+    // console.log("text is : ", e, index);
+    const newInvestigation = [...investigation];
+
+    if (property === "name") {
+      newInvestigation[index].name = e;
+      setInvestigation(newInvestigation);
+    } else if (property === "value") {
+      newInvestigation[index].value = e;
+      setInvestigation(newInvestigation);
+    } else if (property === "ml") {
+      newInvestigation[index].ml = e;
+      setInvestigation(newInvestigation);
+    }
+  };
+
+  // console.log("Dischage Medicare is  : ", dischargeMedication);
+  // console.log("chief complaint is  : ", chiefComplaint);
+
   const allDepartments = [
     {
       id:1,
@@ -131,73 +251,6 @@ const InputForm = () => {
       ]
     },
   ]
-  
-  console.log("p department is : ", primaryConsultantDepartment)
-
-  // ------------MEDICATION-----------
-
-  const changeMedication = (e, property, index) => {
-    // console.log("text is : ", e, index);
-    const newDischargeMedication = [...dischargeMedication];
-
-    if (property === "brandName") {
-      newDischargeMedication[index].brandName = e;
-      setDischareMedication(newDischargeMedication);
-    } else if (property === "doses") {
-      newDischargeMedication[index].doses = e;
-      setDischareMedication(newDischargeMedication);
-    } else if (property === "duration") {
-      newDischargeMedication[index].duration = e;
-      setDischareMedication(newDischargeMedication);
-    } else if (property === "note") {
-      newDischargeMedication[index].note = e;
-      setDischareMedication(newDischargeMedication);
-    }
-  };
-  const addMedication = () => {
-    defaultMedication = [
-      ...dischargeMedication,
-      {
-        brandName: "",
-        doses: "",
-        duration: "",
-        note: "",
-      },
-    ];
-    setDischareMedication(defaultMedication);
-  };
-
-  // ----------INVESTIGATION---------
-
-  const addInvestigation = (input) => {
-    setInvestigation([
-      ...investigation,
-      {
-        name: input,
-        value: "",
-        ml: "",
-      },
-    ]);
-  };
-
-  const changeInvestigation = (e, property, index) => {
-    // console.log("text is : ", e, index);
-    const newInvestigation = [...investigation];
-
-    if (property === "name") {
-      newInvestigation[index].name = e;
-      setInvestigation(newInvestigation);
-    } else if (property === "value") {
-      newInvestigation[index].value = e;
-      setInvestigation(newInvestigation);
-    } else if (property === "ml") {
-      newInvestigation[index].ml = e;
-      setInvestigation(newInvestigation);
-    }
-  };
-
-  // console.log("Dischage Medicare is  : ", dischargeMedication);
-  // console.log("chief complaint is  : ", chiefComplaint);
 
   // ----------Print-----------
   const componentRef = useRef();
@@ -429,7 +482,7 @@ const InputForm = () => {
             </Col>
 
             {/* --------------------------------- */}
-            <Col md={6}>
+            <Col md={4}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                   <label style={{ textAlign: "start" }}>
@@ -440,14 +493,19 @@ const InputForm = () => {
                 <DatePicker
                   id="datepicker"
                   selected={dateOfAdmission}
-                  onChange={(e) => setDateOfAdmission(e)}
+                  onChange={(e) => {
+                    setDateOfAdmission(e)
+                    if(dateOfDischarge){
+                      setTotalDays(dateOfAdmission.getTime()-dateOfDischarge.getTime())
+                    }
+                  }}
                   // dateFormat="yyyy/MM/dd"
                   dateFormat="dd/MM/yyyy"
                 />
               </FormGroup>
             </Col>
             {/* --------------------------------- */}
-            <Col md={6}>
+            <Col md={4}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                   <label style={{ textAlign: "start" }}>
@@ -458,8 +516,35 @@ const InputForm = () => {
                 <DatePicker
                   id="datepicker"
                   selected={dateOfDischarge}
-                  onChange={(e) => setDateOfDischarge(e)}
+                  onChange={(e) =>{
+                    setDateOfDischarge(e)
+                    if(dateOfAdmission){
+                      setTotalDays(dateOfAdmission.getTime() -dateOfDischarge.getTime())
+                      // setTotalDays(formatDistance(dateOfAdmission, dateOfDischarge))
+                    }
+                  } }
                   dateFormat="dd/MM/yyyy"
+                />
+              </FormGroup>
+            </Col>
+            {/* --------------------------------- */}
+            <Col md={4}>
+              <FormGroup>
+                <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                  <label style={{ textAlign: "start" }}>
+                   Total Days :
+                  </label>
+                </div>
+
+                <Input
+                disabled
+                  id="word_cabin_no"
+                  name="word_cabin_no"
+                  // placeholder="Others Consultant"
+                  type="text"
+                  // {...register("word_cabin_no")}
+                  value={Difference_In_Days && Number(Difference_In_Days) }
+                  // onChange={(e) => setOthersConsultant(e.target.value)}
                 />
               </FormGroup>
             </Col>
@@ -704,6 +789,101 @@ const InputForm = () => {
             {/* ------------------------------------------ */}
           </Row>
 
+          {/* Drug treatment during hospital */}
+          <div style={{ border: ".5px solid #CED4DA", padding: "1rem", marginBottom:"1rem" }}>
+            <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+              <label style={{ textAlign: "start", fontWeight: "600" }}>
+                Drug treatment during hospital :
+              </label>
+            </div>
+            {dischargeMedication &&
+              dischargeMedication.map((m, index) => {
+                return (
+                  <Row style={{ marginTop: ".5rem" }}>
+                    <Col md={3}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>
+                          Brand/Geneic Name :
+                        </label>
+                      </div>
+                      <Input
+                        id="department"
+                        name="word_cabin_no"
+                        placeholder="Brand/Geneic Name"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        defaultValue={m.brandName}
+                        onChange={(e) =>
+                          changeDrugTreatment(e.target.value, "brandName", index)
+                        }
+                      />
+                    </Col>
+                    <Col md={3}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>Doses :</label>
+                      </div>
+                      <Input
+                        id="doses"
+                        name="doses"
+                        placeholder="Doses"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        value={m.doses}
+                        onChange={(e) =>
+                          changeDrugTreatment(e.target.value, "doses", index)
+                        }
+                      />
+                    </Col>
+                    <Col md={3}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>Duration :</label>
+                      </div>
+                      <Input
+                        id="department"
+                        name="duration"
+                        placeholder="Duration"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        value={m.duration}
+                        onChange={(e) =>
+                          changeDrugTreatment(e.target.value, "duration", index)
+                        }
+                      />
+                    </Col>
+                    <Col md={3}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>Note :</label>
+                      </div>
+                      <Input
+                        id="department"
+                        name="word_cabin_no"
+                        placeholder="Note"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        value={m.note}
+                        onChange={(e) =>
+                          changeDrugTreatment(e.target.value, "note", index)
+                        }
+                      />
+                    </Col>
+                  </Row>
+                );
+              })}
+
+            <Row style={{ marginTop: "1rem" }}>
+              <Col md={12}>
+                <Button onClick={() => addDrugTreatment()}>+ ADD NEW</Button>
+              </Col>
+            </Row>
+          </div>
           {/* Discharge Medication */}
           <div style={{ border: ".5px solid #CED4DA", padding: "1rem" }}>
             <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
@@ -801,7 +981,7 @@ const InputForm = () => {
           </div>
 
           {/* ------------------------------------------------------------------------- */}
-          {/* Discharge Medication */}
+          {/*  Investigation */}
           <div
             style={{
               border: "1px solid #CED4DA",
