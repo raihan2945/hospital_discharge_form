@@ -864,7 +864,7 @@ const InputForm = () => {
           </Row>
 
           {/* Discharge Medication */}
-          <div style={{ border: ".5px solid #CED4DA", padding: "1rem" }}>
+          <div style={{ border: ".5px solid #CED4DA", padding: "1rem", backgroundColor:"#F5FDFF"}}>
             <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
               <label style={{ textAlign: "start", fontWeight: "600" }}>
                 Discharge Medication :
