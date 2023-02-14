@@ -167,6 +167,16 @@ const InputForm = () => {
   // const [diagnosisValue, setDiagnosisValue] = useState();
   const [commentBox, setCommentBox] = useState();
 
+  let defaultDrugTreatment = [
+    {
+      brandName: "",
+      doses: "",
+      duration: "",
+      note: "",
+    },
+  ];
+  const [drugTreatment, setDrugTreatment] = useState(defaultDrugTreatment);
+
   let defaultMedication = [
     {
       brandName: "",
@@ -192,6 +202,9 @@ const InputForm = () => {
   const [dietaryAdvice, setDietaryAdvice] = useState();
 
   // const [contactPersonName, setContactPersonName] = useState();
+
+  let newDate =  new Date(dateOfDischarge).getTime() - new Date(dateOfAdmission).getTime()
+  var Difference_In_Days = newDate / (1000 * 3600 * 24);
 
   const {
     register,
@@ -241,6 +254,39 @@ const InputForm = () => {
       },
     ];
     setDischareMedication(defaultMedication);
+  };
+
+  //Drug treatment
+
+  const changeDrugTreatment = (e, property, index) => {
+    // console.log("text is : ", e, index);
+    const newDischargeMedication = [...drugTreatment];
+
+    if (property === "brandName") {
+      newDischargeMedication[index].brandName = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "doses") {
+      newDischargeMedication[index].doses = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "duration") {
+      newDischargeMedication[index].duration = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "note") {
+      newDischargeMedication[index].note = e;
+      setDischareMedication(newDischargeMedication);
+    }
+  };
+  const addDrugTreatment = () => {
+    defaultDrugTreatment = [
+      ...dischargeMedication,
+      {
+        brandName: "",
+        doses: "",
+        duration: "",
+        note: "",
+      },
+    ];
+    setDischareMedication(defaultDrugTreatment);
   };
 
   // ----------INVESTIGATION---------
@@ -512,7 +558,7 @@ const InputForm = () => {
             </Col>
 
             {/* --------------------------------- */}
-            <Col md={6}>
+            <Col md={4}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                   <label style={{ textAlign: "start" }}>
@@ -530,7 +576,7 @@ const InputForm = () => {
               </FormGroup>
             </Col>
             {/* --------------------------------- */}
-            <Col md={6}>
+            <Col md={4}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                   <label style={{ textAlign: "start" }}>
@@ -547,10 +593,31 @@ const InputForm = () => {
               </FormGroup>
             </Col>
             {/* --------------------------------- */}
+            <Col md={4}>
+              <FormGroup>
+                <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                  <label style={{ textAlign: "start" }}>Total Days :</label>
+                </div>
+
+                <Input
+                  disabled
+                  id="word_cabin_no"
+                  name="word_cabin_no"
+                  // placeholder="Others Consultant"
+                  type="text"
+                  // {...register("word_cabin_no")}
+                  value={Difference_In_Days && Number(Difference_In_Days)}
+                  // onChange={(e) => setOthersConsultant(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
+            {/* --------------------------------- */}
             <Col md={12}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>Physical science:</label>
+                  <label style={{ textAlign: "start" }}>
+                    Physical science:
+                  </label>
                 </div>
 
                 <Select.Creatable
@@ -859,12 +926,123 @@ const InputForm = () => {
                 />
               </FormGroup>
             </Col>
-
-            {/* ------------------------------------------ */}
           </Row>
+          {/* ------------------------------------------ */}
+
+          {/* Drug treatment during hospital */}
+          <div
+            style={{
+              border: ".5px solid #CED4DA",
+              padding: "1rem",
+              marginBottom: "1rem",
+            }}
+          >
+            <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+              <label style={{ textAlign: "start", fontWeight: "600" }}>
+                Drug treatment during hospital :
+              </label>
+            </div>
+            {dischargeMedication &&
+              dischargeMedication.map((m, index) => {
+                return (
+                  <Row style={{ marginTop: ".5rem" }}>
+                    <Col md={3}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>
+                          Brand/Geneic Name :
+                        </label>
+                      </div>
+                      <Input
+                        id="department"
+                        name="word_cabin_no"
+                        placeholder="Brand/Geneic Name"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        defaultValue={m.brandName}
+                        onChange={(e) =>
+                          changeDrugTreatment(
+                            e.target.value,
+                            "brandName",
+                            index
+                          )
+                        }
+                      />
+                    </Col>
+                    <Col md={3}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>Doses :</label>
+                      </div>
+                      <Input
+                        id="doses"
+                        name="doses"
+                        placeholder="Doses"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        value={m.doses}
+                        onChange={(e) =>
+                          changeDrugTreatment(e.target.value, "doses", index)
+                        }
+                      />
+                    </Col>
+                    <Col md={3}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>Duration :</label>
+                      </div>
+                      <Input
+                        id="department"
+                        name="duration"
+                        placeholder="Duration"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        value={m.duration}
+                        onChange={(e) =>
+                          changeDrugTreatment(e.target.value, "duration", index)
+                        }
+                      />
+                    </Col>
+                    <Col md={3}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>Note :</label>
+                      </div>
+                      <Input
+                        id="department"
+                        name="word_cabin_no"
+                        placeholder="Note"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        value={m.note}
+                        onChange={(e) =>
+                          changeDrugTreatment(e.target.value, "note", index)
+                        }
+                      />
+                    </Col>
+                  </Row>
+                );
+              })}
+
+            <Row style={{ marginTop: "1rem" }}>
+              <Col md={12}>
+                <Button onClick={() => addDrugTreatment()}>+ ADD NEW</Button>
+              </Col>
+            </Row>
+          </div>
 
           {/* Discharge Medication */}
-          <div style={{ border: ".5px solid #CED4DA", padding: "1rem", backgroundColor:"#F5FDFF"}}>
+          <div
+            style={{
+              border: ".5px solid #CED4DA",
+              padding: "1rem",
+              backgroundColor: "#F5FDFF",
+            }}
+          >
             <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
               <label style={{ textAlign: "start", fontWeight: "600" }}>
                 Discharge Medication :
