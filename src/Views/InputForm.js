@@ -264,21 +264,21 @@ const InputForm = () => {
 
     if (property === "brandName") {
       newDischargeMedication[index].brandName = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     } else if (property === "doses") {
       newDischargeMedication[index].doses = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     } else if (property === "duration") {
       newDischargeMedication[index].duration = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     } else if (property === "note") {
       newDischargeMedication[index].note = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     }
   };
   const addDrugTreatment = () => {
     defaultDrugTreatment = [
-      ...dischargeMedication,
+      ...drugTreatment,
       {
         brandName: "",
         doses: "",
@@ -286,7 +286,10 @@ const InputForm = () => {
         note: "",
       },
     ];
-    setDischareMedication(defaultDrugTreatment);
+
+    // alert("im called")
+
+    setDrugTreatment(defaultDrugTreatment);
   };
 
   // ----------INVESTIGATION---------
@@ -942,8 +945,8 @@ const InputForm = () => {
                 Drug treatment during hospital :
               </label>
             </div>
-            {dischargeMedication &&
-              dischargeMedication.map((m, index) => {
+            {drugTreatment &&
+              drugTreatment.map((m, index) => {
                 return (
                   <Row style={{ marginTop: ".5rem" }}>
                     <Col md={3}>
@@ -1326,7 +1329,7 @@ const InputForm = () => {
           dischargeMedication={dischargeMedication}
           investigation={investigation}
           followUp={followUp}
-          followUpDate={followUpDate}
+          // followUpDate={followUpDate}
           dietaryAdvice={dietaryAdvice}
           ref={componentRef}
         ></PrintPreview>
