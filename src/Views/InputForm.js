@@ -1046,8 +1046,8 @@ const InputForm = () => {
               backgroundColor: "#F5FDFF",
             }}
           >
-            <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-              <label style={{ textAlign: "start", fontWeight: "600" }}>
+            <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+              <label style={{ textAlign: "center", fontWeight: "600" }}>
                 Discharge Medication :
               </label>
             </div>
