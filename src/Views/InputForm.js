@@ -937,7 +937,7 @@ const InputForm = () => {
               marginBottom: "1rem",
             }}
           >
-            <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+            <div style={{ textAlign: "center", marginBottom: ".5rem" }}>
               <label style={{ textAlign: "start", fontWeight: "600" }}>
                 Drug treatment during hospital :
               </label>
