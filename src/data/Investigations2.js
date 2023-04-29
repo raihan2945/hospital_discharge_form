@@ -1,55 +1,55 @@
 export const mainInvestigations = [
     {
-        id:1,
-        name:"Biospy",
+        value:1,
+        label:"Biospy",
     },
     {
-        id:2,
-        name:"ECG",
+        value:2,
+        label:"ECG",
     },
     {
-        id:3,
-        name:"CBC",
+        value:3,
+        label:"CBC",
     },
     {
-        id:4,
-        name:"Blood Sugar",
+        value:4,
+        label:"Blood Sugar",
     },
     {
-        id:5,
-        name:"RFT",
+        value:5,
+        label:"RFT",
     },
     {
-        id:6,
-        name:"LFT",
+        value:6,
+        label:"LFT",
     },
     {
-        id:7,
-        name:"Electrolytes",
+        value:7,
+        label:"Electrolytes",
     },
     {
-        id:8,
-        name:"F. Lipid profile",
+        value:8,
+        label:"F. Lipvalue profile",
     },
     {
-        id:9,
-        name:"Viral markers",
+        value:9,
+        label:"Viral markers",
     },
     {
-        id:10,
-        name:"Tumor markers",
+        value:10,
+        label:"Tumor markers",
     },
     {
-        id:11,
-        name:"Radiology & Imaging",
+        value:11,
+        label:"Radiology & Imaging",
     },
     {
-        id:12,
-        name:"Endoscopy",
+        value:12,
+        label:"Endoscopy",
     },
     {
-        id:13,
-        name:"Ascitic fluid study",
+        value:13,
+        label:"Ascitic fluvalue study",
     },
 
 ]
@@ -156,15 +156,15 @@ export const subInvestigations = [
     },
     {   pId:7,
         id:3, 
-        name : "Na*"
+        name : "Na+"
     },
     {   pId:7,
         id:3, 
-        name : "k*"
+        name : "k+"
     },
     {   pId:7,
         id:3, 
-        name : "CL-"
+        name : "Cl-"
     },
     {   pId:7,
         id:3, 

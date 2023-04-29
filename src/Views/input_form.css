@@ -7,6 +7,27 @@
 .form-demo .card .field {
     margin-bottom: 1.5rem;
 }
+
+.react-select-container{
+    text-align: left !important;
+}
+.css-1p3m7a8-multiValue{
+    font-size: 20px;
+}
+
+.select_menu{
+    text-align: left !important;
+}
+
+.css-1jqq78o-placeholder{
+    /* text-align: left; */
+}
+
+.css-1nmdiq5-menu{
+    text-align: left;
+}
+
+
 @media screen and (max-width: 960px) {
     .form-demo .card {
         width: 80%;

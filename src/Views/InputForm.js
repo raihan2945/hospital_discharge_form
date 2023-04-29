@@ -2,6 +2,8 @@ import { Form, Label, Input, FormGroup, Row, Col, Button } from "reactstrap";
 import React, { useEffect, useState, useRef, useId } from "react";
 import { useForm, Controller } from "react-hook-form";
 // import DatePicker from "react-bootstrap-date-picker";
+import "./input_form.css";
+
 import { useReactToPrint } from "react-to-print";
 import { mainInvestigations, subInvestigations } from "../data/Investigations2";
 
@@ -9,6 +11,8 @@ import { v1 as uuidv1 } from "uuid";
 
 import Select from "react-select-plus";
 import "react-select-plus/dist/react-select-plus.css";
+import CreatableSelect from "react-select/creatable";
+import RSelect, { components } from "react-select";
 
 // @date picker
 import DatePicker from "react-datepicker";
@@ -156,6 +160,7 @@ const InputForm = () => {
 
   const [patientName, setPatientName] = useState("");
   const [patientPhone, setPatientPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [patinetGender, setPatientGender] = useState("");
   const [age, setAge] = useState();
   const [id, setId] = useState();
@@ -175,7 +180,7 @@ const InputForm = () => {
     useState();
   const [dcs, setDcs] = useState();
   const [chiefComplaintDate, setChiefComplaintDate] = useState();
-  const [chiefComplaint, setChiefComplaint] = useState([]);
+  const [comorbidity, setComorbidity] = useState([]);
   const [diagnosisOption, setDiagnosisOption] = useState([]);
   const [otherDiognosis, setOtherDiognosis] = useState();
   const [commentBox, setCommentBox] = useState();
@@ -309,22 +314,36 @@ const InputForm = () => {
   // ----------INVESTIGATION---------
 
   const addInvestigation = async (input) => {
-    // console.log("selected investigation is: ", input);
+    console.log("selected investigation is: ", input);
 
-    const sInvestigation = await mainInvestigations.find((i) => i.id == input);
+    // const sInvestigation = await mainInvestigations.find((i) => i.id == input);
 
-    setInvestigation([
-      ...investigation,
-      {
-        pValue: {
-          id: sInvestigation.id,
-          name: sInvestigation.name,
-        },
-        name: "",
-        value: "",
-        date: "",
-      },
-    ]);
+    setInvestigation(
+      input.map((v) => {
+        return {
+          pValue: {
+            id: v.value,
+            name: v.label,
+          },
+          name: "",
+          value: "",
+          date: "",
+        };
+      })
+    );
+
+    // setInvestigation([
+    //   ...investigation,
+    //   {
+    //     pValue: {
+    //       id: sInvestigation.id,
+    //       name: sInvestigation.name,
+    //     },
+    //     name: "",
+    //     value: "",
+    //     date: "",
+    //   },
+    // ]);
   };
 
   const changeInvestigation = (e, property, index) => {
@@ -344,7 +363,7 @@ const InputForm = () => {
   };
 
   // console.log("Dischage Medicare is  : ", dischargeMedication);
-  // console.log("chief complaint is  : ", chiefComplaint);
+  console.log("current invstigation is  : ", investigation);
 
   // ----------Print-----------
   const componentRef = useRef();
@@ -385,7 +404,7 @@ const InputForm = () => {
           />
         </div>
 
-        <h4 style={{ marginTop: "1.5rem" }}>Discharge Summery</h4>
+        <h4 style={{ marginTop: "1.5rem" }}>Discharge Certificate</h4>
 
         <hr style={{ margin: "1rem 0rem" }} />
 
@@ -444,11 +463,28 @@ const InputForm = () => {
                 <Input
                   id="patient_phone"
                   name="Phone"
-                  placeholder="patient_phone"
+                  placeholder="phone"
                   type="text"
                   // {...register("patient_phone")}
                   value={patientPhone}
                   onChange={(e) => setPatientPhone(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={12}>
+              <FormGroup>
+                <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                  <label style={{ textAlign: "start" }}>Email :</label>
+                </div>
+
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="email"
+                  type="email"
+                  // {...register("patient_phone")}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </FormGroup>
             </Col>
@@ -645,9 +681,21 @@ const InputForm = () => {
                   </label>
                 </div>
 
-                <Select.Creatable
-                  multi={true}
+                <CreatableSelect
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      // borderColor: state.isFocused ? 'grey' : 'red',
+                      textAlign: "left",
+                    }),
+                  }}
+                  hideSelectedOptions={false}
+                  closeMenuOnSelect={false}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  isMulti={true}
                   name="form-field-name"
+                  isClearable
                   value={physicalScience}
                   onChange={(value) => setPhysicalScience(value)}
                   options={[
@@ -869,15 +917,78 @@ const InputForm = () => {
               </FormGroup>
             </Col> */}
             {/* --------------------------------- */}
+            <Col md={12}>
+              <FormGroup>
+                <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                  <label style={{ textAlign: "start" }}>
+                  Comorbidity :
+                  </label>
+                </div>
+
+                <CreatableSelect
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      // borderColor: state.isFocused ? 'grey' : 'red',
+                      textAlign: "left",
+                    }),
+                  }}
+                  hideSelectedOptions={false}
+                  closeMenuOnSelect={false}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  isMulti={true}
+                  name="form-field-name"
+                  isClearable
+                  value={comorbidity}
+                  onChange={(value) => setComorbidity(value)}
+                  options={[
+                    { value: "Hyper Tension", label: "Hyper Tension" },
+                    { value: "Diabetes", label: "Diabetes" },
+                    { value: "Arthritis", label: "Arthritis" },
+                    { value: "Stroke", label: "Stroke" },
+                    { value: "Asthma", label: "Asthma" },
+                    { value: "COPD", label: "COPD" },
+                    { value: "Parkinsonism", label: "Parkinsonism" },
+                    { value: "Psoriasis", label: "Psoriasis" },
+                    { value: "Others", label: "Others" },
+                  ]}
+                />
+
+                {/* <Input
+                  id="department"
+                  name="word_cabin_no"
+                  placeholder="Diagnosis"
+                  type="text"
+                  value={diagnosisText}
+                  onChange={(e) => setDiagnosisText(e.target.value)}
+                /> */}
+              </FormGroup>
+            </Col>
+            {/* --------------------------------- */}
             <Col md={6}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>Principle Diagnosis :</label>
+                  <label style={{ textAlign: "start" }}>
+                    Principle Diagnosis :
+                  </label>
                 </div>
 
-                <Select.Creatable
-                  multi={true}
+                <CreatableSelect
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      // borderColor: state.isFocused ? 'grey' : 'red',
+                      textAlign: "left",
+                    }),
+                  }}
+                  hideSelectedOptions={false}
+                  closeMenuOnSelect={false}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  isMulti={true}
                   name="form-field-name"
+                  isClearable
                   value={diagnosisOption}
                   onChange={(value) => setDiagnosisOption(value)}
                   options={[
@@ -988,6 +1099,7 @@ const InputForm = () => {
               border: "1px solid #CED4DA",
               padding: "1rem",
               boxShadow: "rgba(0, 0, 0, 0.03) 0px 1px 4px",
+              backgroundColor: "#cce4f5",
             }}
           >
             <Row style={{ marginBottom: ".5rem" }}>
@@ -999,20 +1111,34 @@ const InputForm = () => {
                 </div>
               </Col>
               <Col sm={8} md={10}>
-                <select
-                  value={modeOfAdmission}
-                  onChange={(e) => addInvestigation(e.target.value)}
+                <CreatableSelect
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      // borderColor: state.isFocused ? 'grey' : 'red',
+                      textAlign: "left",
+                    }),
+                  }}
+                  dfaultValue={[]}
+                  // onChange={(e) => addInvestigation(e.target.value)}
+                  isMulti
+                  closeMenuOnSelect={false}
+                  hideSelectedOptions={false}
+                  onChange={(options) => {
+                    if (Array.isArray(options)) {
+                      addInvestigation(options.map((opt) => opt));
+                    }
+                  }}
                   class="form-select"
                   aria-label="Default select example"
-                >
-                  <option disabled selected>
-                    Select a value
-                  </option>
-                  {mainInvestigations?.map((mIn) => {
-                    return <option value={mIn.id}>{mIn.name}</option>;
-                  })}
-                  {/* <option value="ARC 2">ARC 2</option> */}
-                </select>
+                  options={mainInvestigations}
+                  // <option disabled selected>
+                  //   Select a value
+                  // </option>
+                  // {mainInvestigations?.map((mIn) => {
+                  //   return <option value={mIn.id}>{mIn.name}</option>;
+                  // })}
+                />
               </Col>
             </Row>
             {investigation?.map((inv, index) => {
@@ -1020,7 +1146,9 @@ const InputForm = () => {
                 <Row style={{ marginTop: ".5rem" }}>
                   <Col md={4}>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                      <label style={{ textAlign: "start" }}>{inv.pValue.name} :</label>
+                      <label style={{ textAlign: "start" }}>
+                        {inv?.pValue.name} :
+                      </label>
                     </div>
 
                     <select
@@ -1035,11 +1163,7 @@ const InputForm = () => {
                       {subInvestigations
                         .filter((i) => i.pId == inv.pValue.id)
                         .map((v) => {
-                          return (
-                            <option value={v.name}>
-                              {v.name}
-                            </option>
-                          );
+                          return <option value={v.name}>{v.name}</option>;
                         })}
                       {/* {mainInvestigations?.map((mIn) => {
                         return <option value={mIn.id}>{mIn.name}</option>;
@@ -1341,10 +1465,18 @@ const InputForm = () => {
               >
                 <option value="">Select an option</option>
                 <option value="Discharge to home">Dishcharge to Home</option>
-                <option value="Referred to other hospital">Referred to other hospital</option>
-                <option value="Referred to other dipertment">Referred to other dipertment</option>
-                <option value="Discharge on request">Discharge on request</option>
-                <option value="Discharge with Rislc board">Discharge with Rislc board</option>
+                <option value="Referred to other hospital">
+                  Referred to other hospital
+                </option>
+                <option value="Referred to other dipertment">
+                  Referred to other dipertment
+                </option>
+                <option value="Discharge on request">
+                  Discharge on request
+                </option>
+                <option value="Discharge against medical advice">
+                  Discharge against medical advice
+                </option>
               </select>
             </FormGroup>
           </Col>
