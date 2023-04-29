@@ -1,6 +1,13 @@
 import { Form, Label, Input, FormGroup, Row, Col, Button } from "reactstrap";
 import React, { useEffect, useState, useRef, useId } from "react";
 import { useForm, Controller } from "react-hook-form";
+
+//Data
+import AllMedicine from "../data/MedicineData.json";
+
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import { DebounceInput } from "react-debounce-input";
+
 // import DatePicker from "react-bootstrap-date-picker";
 import "./input_form.css";
 
@@ -148,6 +155,7 @@ const allDepartments = [
 ];
 
 const InputForm = () => {
+  console.log("all medicine is : ", AllMedicine);
   // ---states
 
   function randomNumberInRange(min, max) {
@@ -364,6 +372,61 @@ const InputForm = () => {
 
   // console.log("Dischage Medicare is  : ", dischargeMedication);
   console.log("current invstigation is  : ", investigation);
+
+  // ================SUGESSION INPUT======================
+  const items = [
+    {
+      id: 0,
+      name: "Cobol",
+    },
+    {
+      id: 1,
+      name: "JavaScript",
+    },
+    {
+      id: 2,
+      name: "Basic",
+    },
+    {
+      id: 3,
+      name: "PHP",
+    },
+    {
+      id: 4,
+      name: "Java",
+    },
+  ];
+  const handleOnSearch = (string, results) => {
+    console.log(string, results);
+  };
+
+  const handleOnHover = (result) => {
+    console.log(result);
+  };
+
+  const handleOnSelect = (item) => {
+    console.log(item);
+  };
+
+  const handleOnFocus = () => {
+    console.log("Focused");
+  };
+
+  const handleOnClear = () => {
+    console.log("Cleared");
+  };
+
+  const formatResult = (item) => {
+    console.log(item);
+    return (
+      <div className="result-wrapper" style={{display:"flex", flexDirection:"column", zIndex:1000}}>
+        <span className="result-span" style={{fontSize:".9rem", fontWeight:600, color:"#48503f"}}>{item.medicine_name}</span>
+        <span className="result-span">{item.strength}</span>
+      </div>
+    );
+  };
+
+  // ======================================
 
   // ----------Print-----------
   const componentRef = useRef();
@@ -920,9 +983,7 @@ const InputForm = () => {
             <Col md={12}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>
-                  Comorbidity :
-                  </label>
+                  <label style={{ textAlign: "start" }}>Comorbidity :</label>
                 </div>
 
                 <CreatableSelect
@@ -1245,20 +1306,33 @@ const InputForm = () => {
                           Brand/Geneic Name :
                         </label>
                       </div>
-                      <Input
-                        id="department"
-                        name="word_cabin_no"
-                        placeholder="Brand/Geneic Name"
-                        type="input"
-                        // {...register("word_cabin_no")}
-                        defaultValue={m.brandName}
-                        onChange={(e) =>
-                          changeDrugTreatment(
-                            e.target.value,
-                            "brandName",
-                            index
-                          )
-                        }
+                      <ReactSearchAutocomplete
+                        items={AllMedicine}
+                        fuseOptions={{ keys: ["medicine_name", "description"] }} // Search on both fields
+                        resultStringKeyName="medicine_name" // String to display in the results
+                        onSearch={handleOnSearch}
+                        onHover={handleOnHover}
+                        onSelect={handleOnSelect}
+                        onFocus={handleOnFocus}
+                        onClear={handleOnClear}
+                        showIcon={false}
+                        formatResult={formatResult}
+                        styling={{
+                          height: "34px",
+                          border: "1px solid darkgreen",
+                          borderRadius: "4px",
+                          backgroundColor: "white",
+                          boxShadow: "none",
+                          hoverBackgroundColor: "#CCE4F5",
+                          color: "#1E1E1E",
+                          fontSize: "12px",
+                          // fontFamily: "Courier",
+                          iconColor: "green",
+                          lineColor: "lightgreen",
+                          placeholderColor: "darkgreen",
+                          clearIconMargin: "3px 8px 0 0",
+                          zIndex: 1000,
+                        }}
                       />
                     </Col>
                     <Col md={3}>
@@ -1351,7 +1425,37 @@ const InputForm = () => {
                           Brand/Geneic Name :
                         </label>
                       </div>
-                      <Input
+
+                      <ReactSearchAutocomplete
+                        items={AllMedicine}
+                        formatResult={formatResult}
+                        fuseOptions={{ keys: ["medicine_name", "description"] }} // Search on both fields
+                        resultStringKeyName="medicine_name" // String to display in the results
+                        onSearch={handleOnSearch}
+                        onHover={handleOnHover}
+                        onSelect={handleOnSelect}
+                        onFocus={handleOnFocus}
+                        onClear={handleOnClear}
+                        showIcon={false}
+                        styling={{
+                          height: "34px",
+                          border: "1px solid darkgreen",
+                          borderRadius: "4px",
+                          backgroundColor: "white",
+                          boxShadow: "none",
+                          hoverBackgroundColor: "#CCE4F5",
+                          color: "#1E1E1E",
+                          fontSize: "12px",
+                          // fontFamily: "Courier",
+                          iconColor: "green",
+                          lineColor: "lightgreen",
+                          placeholderColor: "darkgreen",
+                          clearIconMargin: "3px 8px 0 0",
+                          zIndex: 1000,
+                        }}
+                      />
+
+                      {/* <Input
                         id="department"
                         name="word_cabin_no"
                         placeholder="Brand/Geneic Name"
@@ -1361,7 +1465,7 @@ const InputForm = () => {
                         onChange={(e) =>
                           changeMedication(e.target.value, "brandName", index)
                         }
-                      />
+                      /> */}
                     </Col>
                     <Col md={3}>
                       <div

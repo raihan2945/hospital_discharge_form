@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "medicine_name": "Exium",
+    "dosages_form": "Capsule",
+    "strength": "20 mg",
+    "generic_name": "Esomeprazole",
+    "company_name": "Radiant Pharmaceuticals Ltd."
+  },
+  {
+    "id": 2,
+    "medicine_name": "Exium",
+    "dosages_form": "Capsule",
+    "strength": "40 mg",
+    "generic_name": "Esomeprazole",
+    "company_name": "Radiant Pharmaceuticals Ltd."
+  },
+  {
+    "id": 3,
+    "medicine_name": "Exium",
+    "dosages_form": "IV Injection",
+    "strength": "40 mg/vial",
+    "generic_name": "Esomeprazole",
+    "company_name": "Radiant Pharmaceuticals Ltd."
+  },
+  {
+    "id": 4,
+    "medicine_name": "Exium MUPS",
+    "dosages_form": "MUPS tablet",
+    "strength": "20 mg",
+    "generic_name": "Esomeprazole",
+    "company_name": "Radiant Pharmaceuticals Ltd."
+  },
+  {
+    "id": 5,
+    "medicine_name": "Exium MUPS",
+    "dosages_form": "MUPS Tablet",
+    "strength": "40 mg",
+    "generic_name": "Esomeprazole",
+    "company_name": "Radiant Pharmaceuticals Ltd."
+  }
+]
