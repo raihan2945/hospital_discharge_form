@@ -1331,7 +1331,7 @@ const InputForm = () => {
                           lineColor: "lightgreen",
                           placeholderColor: "darkgreen",
                           clearIconMargin: "3px 8px 0 0",
-                          zIndex: 1000,
+                          zIndex: 1001,
                         }}
                       />
                     </Col>

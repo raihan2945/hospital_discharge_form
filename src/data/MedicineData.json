@@ -16,7 +16,6 @@
     "company_name": "Radiant Pharmaceuticals Ltd."
   },
   {
-    "id": 3,
     "medicine_name": "Exium",
     "dosages_form": "IV Injection",
     "strength": "40 mg/vial",
@@ -24,7 +23,6 @@
     "company_name": "Radiant Pharmaceuticals Ltd."
   },
   {
-    "id": 4,
     "medicine_name": "Exium MUPS",
     "dosages_form": "MUPS tablet",
     "strength": "20 mg",
@@ -32,7 +30,6 @@
     "company_name": "Radiant Pharmaceuticals Ltd."
   },
   {
-    "id": 5,
     "medicine_name": "Exium MUPS",
     "dosages_form": "MUPS Tablet",
     "strength": "40 mg",
