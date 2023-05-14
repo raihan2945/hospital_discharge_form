@@ -685,7 +685,7 @@ const InputForm = () => {
                   class="form-select"
                   aria-label="Default select example"
                 >
-                  <option value="Regular">Opt</option>
+                  <option value="Regular">OPD</option>
                   <option value="Emergenct">Emergency</option>
                 </select>
               </FormGroup>
