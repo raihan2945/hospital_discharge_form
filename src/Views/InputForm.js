@@ -321,37 +321,58 @@ const InputForm = () => {
 
   // ----------INVESTIGATION---------
 
+  // const addInvestigation = async (input) => {
+  //   console.log("selected investigation is: ", input);
+
+  //   // const sInvestigation = await mainInvestigations.find((i) => i.id == input);
+
+  //   setInvestigation(
+  //     input.map((v) => {
+  //       return {
+  //         pValue: {
+  //           id: v.value,
+  //           name: v.label,
+  //         },
+  //         name: "",
+  //         value: "",
+  //         date: "",
+  //       };
+  //     })
+  //   );
+
+  //   // setInvestigation([
+  //   //   ...investigation,
+  //   //   {
+  //   //     pValue: {
+  //   //       id: sInvestigation.id,
+  //   //       name: sInvestigation.name,
+  //   //     },
+  //   //     name: "",
+  //   //     value: "",
+  //   //     date: "",
+  //   //   },
+  //   // ]);
+  // };
+
   const addInvestigation = async (input) => {
-    console.log("selected investigation is: ", input);
+    // console.log("selected investigation is: ", input);
 
-    // const sInvestigation = await mainInvestigations.find((i) => i.id == input);
+    const sInvestigation = await mainInvestigations.find((i) => i.value == input);
 
-    setInvestigation(
-      input.map((v) => {
-        return {
-          pValue: {
-            id: v.value,
-            name: v.label,
-          },
-          name: "",
-          value: "",
-          date: "",
-        };
-      })
-    );
+    console.log("sInvetigation is : ", sInvestigation)
 
-    // setInvestigation([
-    //   ...investigation,
-    //   {
-    //     pValue: {
-    //       id: sInvestigation.id,
-    //       name: sInvestigation.name,
-    //     },
-    //     name: "",
-    //     value: "",
-    //     date: "",
-    //   },
-    // ]);
+    setInvestigation([
+      ...investigation,
+      {
+        pValue: {
+          id: sInvestigation.value,
+          name: sInvestigation.label,
+        },
+        name: "",
+        value: "",
+        date: "",
+      },
+    ]);
   };
 
   const changeInvestigation = (e, property, index) => {
@@ -416,11 +437,19 @@ const InputForm = () => {
     console.log("Cleared");
   };
 
-  const formatResult = (item) => {
-    console.log(item);
+  const formatResult = (item, index) => {
+    console.log(console.log("item is : ", item, "index is : ", index));
     return (
-      <div className="result-wrapper" style={{display:"flex", flexDirection:"column", zIndex:1000}}>
-        <span className="result-span" style={{fontSize:".9rem", fontWeight:600, color:"#48503f"}}>{item.medicine_name}</span>
+      <div
+        className="result-wrapper"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <span
+          className="result-span"
+          style={{ fontSize: ".9rem", fontWeight: 600, color: "#48503f" }}
+        >
+          {item.medicine_name}
+        </span>
         <span className="result-span">{item.strength}</span>
       </div>
     );
@@ -709,10 +738,12 @@ const InputForm = () => {
                 </div>
 
                 <DatePicker
+                  disabled = {!dateOfAdmission}
                   id="datepicker"
                   selected={dateOfDischarge}
                   onChange={(e) => setDateOfDischarge(e)}
                   dateFormat="dd/MM/yyyy"
+                  excludeDates={[dateOfAdmission]}
                 />
               </FormGroup>
             </Col>
@@ -1172,7 +1203,7 @@ const InputForm = () => {
                 </div>
               </Col>
               <Col sm={8} md={10}>
-                <CreatableSelect
+                {/* <CreatableSelect
                   styles={{
                     control: (baseStyles, state) => ({
                       ...baseStyles,
@@ -1199,7 +1230,22 @@ const InputForm = () => {
                   // {mainInvestigations?.map((mIn) => {
                   //   return <option value={mIn.id}>{mIn.name}</option>;
                   // })}
-                />
+                /> */}
+
+                <select
+                  value={modeOfAdmission}
+                  onChange={(e) => addInvestigation(e.target.value)}
+                  class="form-select"
+                  aria-label="Default select example"
+                >
+                  <option disabled selected>
+                    Select a value
+                  </option>
+                  {mainInvestigations?.map((mIn) => {
+                    return <option value={mIn.value}>{mIn.label}</option>;
+                  })}
+                  {/* <option value="ARC 2">ARC 2</option> */}
+                </select>
               </Col>
             </Row>
             {investigation?.map((inv, index) => {
@@ -1316,7 +1362,9 @@ const InputForm = () => {
                         onFocus={handleOnFocus}
                         onClear={handleOnClear}
                         showIcon={false}
-                        formatResult={formatResult}
+                        minChars={2}
+                        maxResults={10}
+                        formatResult={(item)=>formatResult(item, index)}
                         styling={{
                           height: "34px",
                           border: "1px solid darkgreen",
@@ -1331,7 +1379,7 @@ const InputForm = () => {
                           lineColor: "lightgreen",
                           placeholderColor: "darkgreen",
                           clearIconMargin: "3px 8px 0 0",
-                          zIndex: 1001,
+                          zIndex: 1000-Number(index),
                         }}
                       />
                     </Col>
@@ -1428,7 +1476,7 @@ const InputForm = () => {
 
                       <ReactSearchAutocomplete
                         items={AllMedicine}
-                        formatResult={formatResult}
+                        formatResult={(item)=>formatResult(item, index)}
                         fuseOptions={{ keys: ["medicine_name", "description"] }} // Search on both fields
                         resultStringKeyName="medicine_name" // String to display in the results
                         onSearch={handleOnSearch}
@@ -1436,6 +1484,8 @@ const InputForm = () => {
                         onSelect={handleOnSelect}
                         onFocus={handleOnFocus}
                         onClear={handleOnClear}
+                        minChars={2}
+                        maxResults={10}
                         showIcon={false}
                         styling={{
                           height: "34px",
@@ -1451,7 +1501,7 @@ const InputForm = () => {
                           lineColor: "lightgreen",
                           placeholderColor: "darkgreen",
                           clearIconMargin: "3px 8px 0 0",
-                          zIndex: 1000,
+                          zIndex: 500-Number(index),
                         }}
                       />
 
