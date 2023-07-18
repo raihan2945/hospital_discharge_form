@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useId } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 //Data
-import AllMedicine from "../data/MedicineData.json";
+import AllMedicine from "../data/MedicineData2.json";
 
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { DebounceInput } from "react-debounce-input";
@@ -450,9 +450,9 @@ const InputForm = () => {
           className="result-span"
           style={{ fontSize: ".9rem", fontWeight: 600, color: "#48503f" }}
         >
-          {item.medicine_name}
+          {item.brand_name}
         </span>
-        <span className="result-span">{item.strength}</span>
+        <span className="result-span">{item.Strength}</span>
       </div>
     );
   };
@@ -1356,8 +1356,8 @@ const InputForm = () => {
                       </div>
                       <ReactSearchAutocomplete
                         items={AllMedicine}
-                        fuseOptions={{ keys: ["medicine_name", "description"] }} // Search on both fields
-                        resultStringKeyName="medicine_name" // String to display in the results
+                        fuseOptions={{ keys: ["brand_name", "generic_name"] }} // Search on both fields
+                        resultStringKeyName="brand_name" // String to display in the results
                         onSearch={handleOnSearch}
                         onHover={handleOnHover}
                         onSelect={handleOnSelect}
@@ -1365,7 +1365,7 @@ const InputForm = () => {
                         onClear={handleOnClear}
                         showIcon={false}
                         minChars={2}
-                        maxResults={10}
+                        maxResults={6}
                         formatResult={(item)=>formatResult(item, index)}
                         styling={{
                           height: "34px",
@@ -1479,15 +1479,15 @@ const InputForm = () => {
                       <ReactSearchAutocomplete
                         items={AllMedicine}
                         formatResult={(item)=>formatResult(item, index)}
-                        fuseOptions={{ keys: ["medicine_name", "description"] }} // Search on both fields
-                        resultStringKeyName="medicine_name" // String to display in the results
+                        fuseOptions={{ keys: ["brand_name", "generic_name"] }} // Search on both fields
+                        resultStringKeyName="brand_name" // String to display in the results
                         onSearch={handleOnSearch}
                         onHover={handleOnHover}
                         onSelect={handleOnSelect}
                         onFocus={handleOnFocus}
                         onClear={handleOnClear}
                         minChars={2}
-                        maxResults={10}
+                        maxResults={6}
                         showIcon={false}
                         styling={{
                           height: "34px",
