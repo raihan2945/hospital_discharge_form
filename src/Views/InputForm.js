@@ -1,6 +1,7 @@
 import { Form, Label, Input, FormGroup, Row, Col, Button } from "reactstrap";
 import React, { useEffect, useState, useRef, useId } from "react";
 import { useForm, Controller } from "react-hook-form";
+import moment from "moment";
 
 //Data
 import AllMedicine from "../data/MedicineData2.json";
@@ -214,7 +215,7 @@ const InputForm = () => {
   const [dischargeMedication, setDischareMedication] =
     useState(defaultMedication);
 
-  console.log('addmission date is : ', dateOfAdmission)
+
 
   const defalutInvestigation = [
     {
@@ -252,7 +253,9 @@ const InputForm = () => {
   // console.log("unit is : ", primaryUnit)
   // console.log("p department is : ", primaryConsultantDepartment);
 
+  console.log('investigation is : ', investigation)
   // ------------MEDICATION-----------
+
 
   const changeMedication = (e, property, index) => {
     // console.log("text is : ", e, index);
@@ -394,7 +397,7 @@ const InputForm = () => {
   };
 
   // console.log("Dischage Medicare is  : ", dischargeMedication);
-  console.log("current invstigation is  : ", investigation);
+  console.log("drugTreatmento is  : ", drugTreatment);
 
   // ================SUGESSION INPUT======================
   const items = [
@@ -1360,7 +1363,11 @@ const InputForm = () => {
                         resultStringKeyName="brand_name" // String to display in the results
                         onSearch={handleOnSearch}
                         onHover={handleOnHover}
-                        onSelect={handleOnSelect}
+                        onSelect={(item)=>{
+                          let newArray = [...drugTreatment]
+                          newArray[index].brandName = item?.brand_name
+                          setDrugTreatment(newArray)
+                        }}
                         onFocus={handleOnFocus}
                         onClear={handleOnClear}
                         showIcon={false}
@@ -1483,7 +1490,11 @@ const InputForm = () => {
                         resultStringKeyName="brand_name" // String to display in the results
                         onSearch={handleOnSearch}
                         onHover={handleOnHover}
-                        onSelect={handleOnSelect}
+                        onSelect={(item)=>{
+                          let newArray = [...dischargeMedication]
+                          newArray[index].brandName = item?.brand_name
+                          setDischareMedication(newArray)
+                        }}
                         onFocus={handleOnFocus}
                         onClear={handleOnClear}
                         minChars={2}
@@ -1718,22 +1729,31 @@ const InputForm = () => {
           contactPersonMobile={contactPersonMobile}
           wordNo={wordNo}
           modeOfAdmission={modeOfAdmission}
-          dateOfAdmission={`${dateOfAdmission?.getDate()}/${dateOfAdmission?.getMonth()}/${dateOfAdmission?.getYear()}`}
-          dateOfDischarge={`${dateOfDischarge?.getDate()}/${dateOfDischarge?.getMonth()}/${dateOfDischarge?.getYear()}`}
+          dateOfAdmission={dateOfAdmission && `${dateOfAdmission?.getDate()}/${dateOfAdmission?.getMonth()}/${dateOfAdmission?.getYear()}`}
+          dateOfDischarge={dateOfDischarge && `${dateOfDischarge?.getDate()}/${dateOfDischarge?.getMonth()}/${dateOfDischarge?.getYear()}`}
+          totalDays = {Difference_In_Days}
+          physicalScience={physicalScience}
           primaryConsultantDepartment={primaryConsultantDepartment?.name}
           primaryConsultant={primaryConsultant}
           othersConsultant={othersConsultant}
           othersConsultantDepartment={othersConsultantDepartment}
+          comorbidity={comorbidity}
           dcs={dcs}
+          diagnosisOption={diagnosisOption}
+          otherDiognosis={otherDiognosis}
           // chiefComplaint ={chiefComplaint}
           // chiefComplaintDate={chiefComplaintDate}
           // diagnosisText ={diagnosisText}
           // diagnosisValue ={diagnosisValue}
+          moodOfDischarge={moodOfDischarge}
+          drugTreatment={drugTreatment}
           commentBox={commentBox}
           defaultMedication={defaultMedication}
           dischargeMedication={dischargeMedication}
           investigation={investigation}
           followUp={followUp}
+          followUpDate={moment(followUpDate).format("MMM Do YY")}
+
           // followUpDate={followUpDate}
           dietaryAdvice={dietaryAdvice}
           ref={componentRef}

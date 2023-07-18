@@ -9,6 +9,7 @@
     "chakra-ui-simple-autocomplete": "^2.3.0",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "primeicons": "^6.0.1",
     "primereact": "^8.7.3",
     "react": "^18.2.0",
