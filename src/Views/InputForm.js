@@ -214,6 +214,8 @@ const InputForm = () => {
   const [dischargeMedication, setDischareMedication] =
     useState(defaultMedication);
 
+  console.log('addmission date is : ', dateOfAdmission)
+
   const defalutInvestigation = [
     {
       name: "",
@@ -1716,8 +1718,8 @@ const InputForm = () => {
           contactPersonMobile={contactPersonMobile}
           wordNo={wordNo}
           modeOfAdmission={modeOfAdmission}
-          // dateOfAdmission={dateOfAdmission}
-          // dateOfDischarge={dateOfDischarge}
+          dateOfAdmission={`${dateOfAdmission?.getDate()}/${dateOfAdmission?.getMonth()}/${dateOfAdmission?.getYear()}`}
+          dateOfDischarge={`${dateOfDischarge?.getDate()}/${dateOfDischarge?.getMonth()}/${dateOfDischarge?.getYear()}`}
           primaryConsultantDepartment={primaryConsultantDepartment?.name}
           primaryConsultant={primaryConsultant}
           othersConsultant={othersConsultant}
