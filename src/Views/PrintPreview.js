@@ -605,13 +605,14 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         fontSize: "1rem",
                       }}
                     >
-                      {comorbidity?.map((item, index) => {
+                      {comorbidity}
+                      {/* {comorbidity?.map((item, index) => {
                         return (
                           <span>
                             {index !== 0 && ","} {item?.label}{" "}
                           </span>
                         );
-                      })}
+                      })} */}
                     </p>
                   </div>
                 </div>
@@ -639,13 +640,14 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         fontSize: "1rem",
                       }}
                     >
-                      {diagnosisOption?.map((item, index) => {
+                      {diagnosisOption}
+                      {/* {diagnosisOption?.map((item, index) => {
                         return (
                           <span>
                             {index !== 0 && ","} {item?.label}{" "}
                           </span>
                         );
-                      })}
+                      })} */}
                     </p>
                   </div>
                 </div>

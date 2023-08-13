@@ -32,131 +32,80 @@ import _uniqueId from "lodash/uniqueId";
 const allDepartments = [
   {
     id: 1,
-    name: "Medical Gastroentrology",
+    name: "Medical Gastroenterology",
     unit: [
       {
         id: "u1",
         name: "Unit Red",
-        consultant: [
-          {
-            name: "Consultant 1",
-          },
-          {
-            name: "Consultant 2",
-          },
-        ],
+        consultant: "",
+      },
+      {
+        id: "u2",
+        name: "Unit Green",
+        consultant: "",
+      },
+      {
+        id: "u3",
+        name: "Unit Blue",
+        consultant: "",
+      },
+      {
+        id: "u4",
+        name: "Unit Red",
+        consultant: "",
+      },
+      {
+        id: "u5",
+        name: "Unit Orange",
+        consultant: "",
+      },
+      {
+        id: "u5",
+        name: "Unit Yellow",
+        consultant: "",
+      },
+      {
+        id: "u5",
+        name: "Unit Violet",
+        consultant: "",
       },
     ],
   },
   {
     id: 2,
-    name: "Surgical Gastroentrology",
+    name: "Surgical Gastroenterology",
     unit: [
       {
+        id: "u1",
+        name: "SU-i",
+        consultant: "",
+      },
+      {
         id: "u2",
-        name: "Unit Red",
-        consultant: [
-          {
-            name: "Consultant 3",
-          },
-          {
-            name: "Consultant 4",
-          },
-          {
-            name: "Consultant 5",
-          },
-        ],
+        name: "SU-ii",
+        consultant: "",
       },
       {
         id: "u3",
-        name: "Unit Blue",
-        consultant: [
-          {
-            name: "Consultant 6",
-          },
-          {
-            name: "Consultant 7",
-          },
-        ],
-      },
-      {
-        id: "u4",
-        name: "Unit Green",
-        consultant: [
-          {
-            name: "Consultant 6",
-          },
-          {
-            name: "Consultant 7",
-          },
-        ],
+        name: "SU-iii",
+        consultant: "",
       },
     ],
   },
   {
     id: 3,
-    name: "Pediatiric Medical",
-    unit: [
-      {
-        id: "u2",
-        name: "Unit Orange",
-        consultant: [
-          {
-            name: "Consultant 8",
-          },
-          {
-            name: "Consultant 9",
-          },
-          {
-            name: "Consultant 10",
-          },
-        ],
-      },
-      {
-        id: "u3",
-        name: "Unit Yellow",
-        consultant: [
-          {
-            name: "Consultant 11",
-          },
-        ],
-      },
-    ],
+    name: "Pediatric Medical Gastroenterology",
+    unit: [],
   },
   {
     id: 4,
-    name: "Pediatric surgical ",
-    unit: [
-      {
-        id: "u2",
-        name: "Unit Purple",
-        consultant: [
-          {
-            name: "Consultant 1",
-          },
-          {
-            name: "Consultant 2",
-          },
-        ],
-      },
-      {
-        id: "u3",
-        name: "Unit White",
-        consultant: [
-          {
-            name: "Consultant 1",
-          },
-          {
-            name: "Consultant 2",
-          },
-        ],
-      },
-    ],
+    name: "Pediatric Surgical Gastroenterology",
+    unit: [],
   },
 ];
 
 const InputForm = () => {
-  console.log("all medicine is : ", AllMedicine);
+  // console.log("all medicine is : ", AllMedicine);
   // ---states
 
   function randomNumberInRange(min, max) {
@@ -189,8 +138,8 @@ const InputForm = () => {
     useState();
   const [dcs, setDcs] = useState();
   const [chiefComplaintDate, setChiefComplaintDate] = useState();
-  const [comorbidity, setComorbidity] = useState([]);
-  const [diagnosisOption, setDiagnosisOption] = useState([]);
+  const [comorbidity, setComorbidity] = useState();
+  const [diagnosisOption, setDiagnosisOption] = useState();
   const [otherDiognosis, setOtherDiognosis] = useState();
   const [commentBox, setCommentBox] = useState();
 
@@ -198,7 +147,9 @@ const InputForm = () => {
     {
       brandName: "",
       doses: "",
+      strength: "",
       duration: "",
+      prandial_advice: "",
       note: "",
     },
   ];
@@ -208,14 +159,14 @@ const InputForm = () => {
     {
       brandName: "",
       doses: "",
+      strength: "",
       duration: "",
+      prandial_advice: "",
       note: "",
     },
   ];
   const [dischargeMedication, setDischareMedication] =
     useState(defaultMedication);
-
-
 
   const defalutInvestigation = [
     {
@@ -226,6 +177,7 @@ const InputForm = () => {
   ];
   const [investigation, setInvestigation] = useState([]);
   const [followUp, setFollowUp] = useState([]);
+  const [procedure, setProcedure] = useState()
   const [moodOfDischarge, setMoodOfDischarge] = useState([]);
   const [followUpDate, setFollowUpDate] = useState();
   const [dietaryAdvice, setDietaryAdvice] = useState();
@@ -253,9 +205,8 @@ const InputForm = () => {
   // console.log("unit is : ", primaryUnit)
   // console.log("p department is : ", primaryConsultantDepartment);
 
-  console.log('investigation is : ', investigation)
+  // console.log("investigation is : ", investigation);
   // ------------MEDICATION-----------
-
 
   const changeMedication = (e, property, index) => {
     // console.log("text is : ", e, index);
@@ -267,8 +218,14 @@ const InputForm = () => {
     } else if (property === "doses") {
       newDischargeMedication[index].doses = e;
       setDischareMedication(newDischargeMedication);
+    } else if (property === "strength") {
+      newDischargeMedication[index].strength = e;
+      setDischareMedication(newDischargeMedication);
     } else if (property === "duration") {
       newDischargeMedication[index].duration = e;
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "prandial_advice") {
+      newDischargeMedication[index].prandial_advice = e;
       setDischareMedication(newDischargeMedication);
     } else if (property === "note") {
       newDischargeMedication[index].note = e;
@@ -281,7 +238,9 @@ const InputForm = () => {
       {
         brandName: "",
         doses: "",
+        strength: "",
         duration: "",
+        prandial_advice: "",
         note: "",
       },
     ];
@@ -296,16 +255,22 @@ const InputForm = () => {
 
     if (property === "brandName") {
       newDischargeMedication[index].brandName = e;
-      setDrugTreatment(newDischargeMedication);
+      setDischareMedication(newDischargeMedication);
     } else if (property === "doses") {
       newDischargeMedication[index].doses = e;
-      setDrugTreatment(newDischargeMedication);
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "strength") {
+      newDischargeMedication[index].strength = e;
+      setDischareMedication(newDischargeMedication);
     } else if (property === "duration") {
       newDischargeMedication[index].duration = e;
-      setDrugTreatment(newDischargeMedication);
+      setDischareMedication(newDischargeMedication);
+    } else if (property === "prandial_advice") {
+      newDischargeMedication[index].prandial_advice = e;
+      setDischareMedication(newDischargeMedication);
     } else if (property === "note") {
       newDischargeMedication[index].note = e;
-      setDrugTreatment(newDischargeMedication);
+      setDischareMedication(newDischargeMedication);
     }
   };
   const addDrugTreatment = () => {
@@ -314,7 +279,9 @@ const InputForm = () => {
       {
         brandName: "",
         doses: "",
+        strength: "",
         duration: "",
+        prandial_advice: "",
         note: "",
       },
     ];
@@ -362,9 +329,11 @@ const InputForm = () => {
   const addInvestigation = async (input) => {
     // console.log("selected investigation is: ", input);
 
-    const sInvestigation = await mainInvestigations.find((i) => i.value == input);
+    const sInvestigation = await mainInvestigations.find(
+      (i) => i.value == input
+    );
 
-    console.log("sInvetigation is : ", sInvestigation)
+    console.log("sInvetigation is : ", sInvestigation);
 
     setInvestigation([
       ...investigation,
@@ -375,7 +344,7 @@ const InputForm = () => {
         },
         name: "",
         value: "",
-        date: "",
+        date: new Date(),
       },
     ]);
   };
@@ -397,31 +366,10 @@ const InputForm = () => {
   };
 
   // console.log("Dischage Medicare is  : ", dischargeMedication);
-  console.log("drugTreatmento is  : ", drugTreatment);
+  // console.log("drugTreatmento is  : ", drugTreatment);
 
   // ================SUGESSION INPUT======================
-  const items = [
-    {
-      id: 0,
-      name: "Cobol",
-    },
-    {
-      id: 1,
-      name: "JavaScript",
-    },
-    {
-      id: 2,
-      name: "Basic",
-    },
-    {
-      id: 3,
-      name: "PHP",
-    },
-    {
-      id: 4,
-      name: "Java",
-    },
-  ];
+
   const handleOnSearch = (string, results) => {
     console.log(string, results);
   };
@@ -443,7 +391,7 @@ const InputForm = () => {
   };
 
   const formatResult = (item, index) => {
-    console.log(console.log("item is : ", item, "index is : ", index));
+    // console.log(console.log("item is : ", item, "index is : ", index));
     return (
       <div
         className="result-wrapper"
@@ -455,7 +403,7 @@ const InputForm = () => {
         >
           {item.brand_name}
         </span>
-        <span className="result-span">{item.Strength}</span>
+        {/* <span className="result-span">{item.Strength}</span> */}
       </div>
     );
   };
@@ -560,7 +508,7 @@ const InputForm = () => {
                 <Input
                   id="patient_phone"
                   name="Phone"
-                  placeholder="phone"
+                  placeholder="Phone"
                   type="text"
                   // {...register("patient_phone")}
                   value={patientPhone}
@@ -568,20 +516,36 @@ const InputForm = () => {
                 />
               </FormGroup>
             </Col>
-            <Col md={12}>
+            <Col md={6}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>Email :</label>
+                  <label style={{ textAlign: "start" }}>Age:</label>
+                </div>
+                <Input
+                  id="age"
+                  name="age"
+                  placeholder="Age"
+                  type="number"
+                  // {...register("patient_phone")}
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                  <label style={{ textAlign: "start" }}>Ward/Cabin No :</label>
                 </div>
 
                 <Input
-                  id="email"
-                  name="email"
-                  placeholder="email"
-                  type="email"
-                  // {...register("patient_phone")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="word_cabin_no"
+                  name="word_cabin_no"
+                  placeholder="Word/Cabin No"
+                  type="text"
+                  // {...register("word_cabin_no")}
+                  value={wordNo}
+                  onChange={(e) => setWordNo(e.target.value)}
                 />
               </FormGroup>
             </Col>
@@ -606,22 +570,7 @@ const InputForm = () => {
                 </select>
               </FormGroup>
             </Col>
-            <Col md={6}>
-              <FormGroup>
-                <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>Age:</label>
-                </div>
-                <Input
-                  id="age"
-                  name="age"
-                  placeholder="Age"
-                  type="number"
-                  // {...register("patient_phone")}
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                />
-              </FormGroup>
-            </Col>
+
             <Col md={6}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
@@ -631,7 +580,7 @@ const InputForm = () => {
                 <Input
                   id="id"
                   name="id"
-                  placeholder="id"
+                  placeholder="ID"
                   type="text"
                   // {...register("id")}
                   value={id}
@@ -639,20 +588,21 @@ const InputForm = () => {
                 />
               </FormGroup>
             </Col>
-            <Col md={6}>
+
+            <Col md={12}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>Word/Cabin No :</label>
+                  <label style={{ textAlign: "start" }}>Email :</label>
                 </div>
 
                 <Input
-                  id="word_cabin_no"
-                  name="word_cabin_no"
-                  placeholder="Word/Cabin No"
-                  type="text"
-                  // {...register("word_cabin_no")}
-                  value={wordNo}
-                  onChange={(e) => setWordNo(e.target.value)}
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  type="email"
+                  // {...register("patient_phone")}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </FormGroup>
             </Col>
@@ -691,7 +641,7 @@ const InputForm = () => {
                   aria-label="Default select example"
                 >
                   <option value="Regular">OPD</option>
-                  <option value="Emergenct">Emergency</option>
+                  <option value="Emergency">Emergency</option>
                 </select>
               </FormGroup>
             </Col>
@@ -743,7 +693,7 @@ const InputForm = () => {
                 </div>
 
                 <DatePicker
-                  disabled = {!dateOfAdmission}
+                  disabled={!dateOfAdmission}
                   id="datepicker"
                   selected={dateOfDischarge}
                   onChange={(e) => setDateOfDischarge(e)}
@@ -910,7 +860,7 @@ const InputForm = () => {
                     </Col>
                   )}
                   {/* --------------------------------- */}
-                  {primaryUnit?.consultant && (
+                  {primaryConsultantDepartment?.unit && (
                     <Col md={12}>
                       <FormGroup>
                         <div
@@ -921,7 +871,7 @@ const InputForm = () => {
                           </label>
                         </div>
 
-                        <select
+                        {/* <select
                           value={primaryConsultant}
                           onChange={(e) => setPrimaryConsultant(e.target.value)}
                           class="form-select"
@@ -931,7 +881,17 @@ const InputForm = () => {
                           {primaryUnit?.consultant?.map((c) => {
                             return <option value={c.name}>{c.name}</option>;
                           })}
-                        </select>
+                        </select> */}
+
+                        <Input
+                          id="word_cabin_no"
+                          name="word_cabin_no"
+                          placeholder="Others Consultant"
+                          type="text"
+                          // {...register("word_cabin_no")}
+                          value={primaryConsultant}
+                          onChange={(e) => setPrimaryConsultant(e.target.value)}
+                        />
                       </FormGroup>
                     </Col>
                   )}
@@ -1022,7 +982,7 @@ const InputForm = () => {
                   <label style={{ textAlign: "start" }}>Comorbidity :</label>
                 </div>
 
-                <CreatableSelect
+                {/* <CreatableSelect
                   styles={{
                     control: (baseStyles, state) => ({
                       ...baseStyles,
@@ -1050,16 +1010,16 @@ const InputForm = () => {
                     { value: "Psoriasis", label: "Psoriasis" },
                     { value: "Others", label: "Others" },
                   ]}
-                />
+                /> */}
 
-                {/* <Input
+                <Input
                   id="department"
                   name="word_cabin_no"
-                  placeholder="Diagnosis"
+                  placeholder="Comorbidility"
                   type="text"
-                  value={diagnosisText}
-                  onChange={(e) => setDiagnosisText(e.target.value)}
-                /> */}
+                  value={comorbidity}
+                  onChange={(e) => setComorbidity(e.target.value)}
+                />
               </FormGroup>
             </Col>
             {/* --------------------------------- */}
@@ -1071,7 +1031,7 @@ const InputForm = () => {
                   </label>
                 </div>
 
-                <CreatableSelect
+                {/* <CreatableSelect
                   styles={{
                     control: (baseStyles, state) => ({
                       ...baseStyles,
@@ -1096,16 +1056,16 @@ const InputForm = () => {
                     { value: "BOV", label: "BOV" },
                     { value: "AR", label: "AR" },
                   ]}
-                />
+                /> */}
 
-                {/* <Input
+                <Input
                   id="department"
                   name="word_cabin_no"
-                  placeholder="Diagnosis"
+                  placeholder="Principal Diagnosis"
                   type="text"
-                  value={diagnosisText}
-                  onChange={(e) => setDiagnosisText(e.target.value)}
-                /> */}
+                  value={diagnosisOption}
+                  onChange={(e) => setDiagnosisOption(e.target.value)}
+                />
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -1349,12 +1309,12 @@ const InputForm = () => {
               drugTreatment.map((m, index) => {
                 return (
                   <Row style={{ marginTop: ".5rem" }}>
-                    <Col md={3}>
+                    <Col md={2}>
                       <div
                         style={{ textAlign: "start", marginBottom: ".5rem" }}
                       >
                         <label style={{ textAlign: "start" }}>
-                          Brand/Geneic Name :
+                          Brand/Generic Name :
                         </label>
                       </div>
                       <ReactSearchAutocomplete
@@ -1363,17 +1323,17 @@ const InputForm = () => {
                         resultStringKeyName="brand_name" // String to display in the results
                         onSearch={handleOnSearch}
                         onHover={handleOnHover}
-                        onSelect={(item)=>{
-                          let newArray = [...drugTreatment]
-                          newArray[index].brandName = item?.brand_name
-                          setDrugTreatment(newArray)
+                        onSelect={(item) => {
+                          let newArray = [...drugTreatment];
+                          newArray[index].brandName = item?.brand_name;
+                          setDrugTreatment(newArray);
                         }}
                         onFocus={handleOnFocus}
                         onClear={handleOnClear}
                         showIcon={false}
                         minChars={2}
                         maxResults={6}
-                        formatResult={(item)=>formatResult(item, index)}
+                        formatResult={(item) => formatResult(item, index)}
                         styling={{
                           height: "34px",
                           border: "1px solid darkgreen",
@@ -1388,11 +1348,29 @@ const InputForm = () => {
                           lineColor: "lightgreen",
                           placeholderColor: "darkgreen",
                           clearIconMargin: "3px 8px 0 0",
-                          zIndex: 1000-Number(index),
+                          zIndex: 1000 - Number(index),
                         }}
                       />
                     </Col>
-                    <Col md={3}>
+                    <Col md={1}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>Strength :</label>
+                      </div>
+                      <Input
+                        id="doses"
+                        name="doses"
+                        placeholder="Strength"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        value={m?.strength}
+                        onChange={(e) =>
+                          changeDrugTreatment(e.target.value, "strength", index)
+                        }
+                      />
+                    </Col>
+                    <Col md={2}>
                       <div
                         style={{ textAlign: "start", marginBottom: ".5rem" }}
                       >
@@ -1410,7 +1388,7 @@ const InputForm = () => {
                         }
                       />
                     </Col>
-                    <Col md={3}>
+                    <Col md={2}>
                       <div
                         style={{ textAlign: "start", marginBottom: ".5rem" }}
                       >
@@ -1427,6 +1405,30 @@ const InputForm = () => {
                           changeDrugTreatment(e.target.value, "duration", index)
                         }
                       />
+                    </Col>
+                    <Col md={2}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>
+                          Prandial advice :
+                        </label>
+                      </div>
+                      <select
+                        value={m?.prandial_advice}
+                        onChange={(e) =>
+                          changeDrugTreatment(
+                            e.target.value,
+                            "prandial_advice",
+                            index
+                          )
+                        }
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option value="Before meal">Before meal</option>
+                        <option value="After meal">After meal</option>
+                      </select>
                     </Col>
                     <Col md={3}>
                       <div
@@ -1474,26 +1476,26 @@ const InputForm = () => {
               dischargeMedication.map((m, index) => {
                 return (
                   <Row style={{ marginTop: ".5rem" }}>
-                    <Col md={3}>
+                    <Col md={2}>
                       <div
                         style={{ textAlign: "start", marginBottom: ".5rem" }}
                       >
                         <label style={{ textAlign: "start" }}>
-                          Brand/Geneic Name :
+                          Brand/Generic Name :
                         </label>
                       </div>
 
                       <ReactSearchAutocomplete
                         items={AllMedicine}
-                        formatResult={(item)=>formatResult(item, index)}
+                        formatResult={(item) => formatResult(item, index)}
                         fuseOptions={{ keys: ["brand_name", "generic_name"] }} // Search on both fields
                         resultStringKeyName="brand_name" // String to display in the results
                         onSearch={handleOnSearch}
                         onHover={handleOnHover}
-                        onSelect={(item)=>{
-                          let newArray = [...dischargeMedication]
-                          newArray[index].brandName = item?.brand_name
-                          setDischareMedication(newArray)
+                        onSelect={(item) => {
+                          let newArray = [...dischargeMedication];
+                          newArray[index].brandName = item?.brand_name;
+                          setDischareMedication(newArray);
                         }}
                         onFocus={handleOnFocus}
                         onClear={handleOnClear}
@@ -1514,7 +1516,7 @@ const InputForm = () => {
                           lineColor: "lightgreen",
                           placeholderColor: "darkgreen",
                           clearIconMargin: "3px 8px 0 0",
-                          zIndex: 500-Number(index),
+                          zIndex: 500 - Number(index),
                         }}
                       />
 
@@ -1530,7 +1532,25 @@ const InputForm = () => {
                         }
                       /> */}
                     </Col>
-                    <Col md={3}>
+                    <Col md={1}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>Strength :</label>
+                      </div>
+                      <Input
+                        id="doses"
+                        name="doses"
+                        placeholder="Strength"
+                        type="input"
+                        // {...register("word_cabin_no")}
+                        value={m?.strength}
+                        onChange={(e) =>
+                          changeMedication(e.target.value, "strength", index)
+                        }
+                      />
+                    </Col>
+                    <Col md={2}>
                       <div
                         style={{ textAlign: "start", marginBottom: ".5rem" }}
                       >
@@ -1548,7 +1568,7 @@ const InputForm = () => {
                         }
                       />
                     </Col>
-                    <Col md={3}>
+                    <Col md={2}>
                       <div
                         style={{ textAlign: "start", marginBottom: ".5rem" }}
                       >
@@ -1565,6 +1585,30 @@ const InputForm = () => {
                           changeMedication(e.target.value, "duration", index)
                         }
                       />
+                    </Col>
+                    <Col md={2}>
+                      <div
+                        style={{ textAlign: "start", marginBottom: ".5rem" }}
+                      >
+                        <label style={{ textAlign: "start" }}>
+                          Prandial advice :
+                        </label>
+                      </div>
+                      <select
+                        value={m?.prandial_advice}
+                        onChange={(e) =>
+                          changeMedication(
+                            e.target.value,
+                            "prandial_advice",
+                            index
+                          )
+                        }
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option value="Before meal">Before meal</option>
+                        <option value="After meal">After meal</option>
+                      </select>
                     </Col>
                     <Col md={3}>
                       <div
@@ -1604,7 +1648,7 @@ const InputForm = () => {
                 </label>
               </div>
 
-              <Input
+              {/* <Input
                 id="department"
                 name="word_cabin_no"
                 placeholder=""
@@ -1612,7 +1656,21 @@ const InputForm = () => {
                 // {...register("word_cabin_no")}
                 value={dcs}
                 onChange={(e) => setDcs(e.target.value)}
-              />
+              /> */}
+              <select
+                value={procedure}
+                onChange={(e) =>
+                 setProcedure(e.target.value)
+                }
+                class="form-select"
+                aria-label="Default select example"
+              >
+                <option value="Endoscopy">Endoscopy</option>
+                <option value="Colonoscopy">Colonoscopy</option>
+                <option value="ERCP">ERCP</option>
+                <option value="Pneumatic Balloon Dilatation">Pneumatic Balloon Dilatation</option>
+                <option value="Written with date & report">Written with date & report</option>
+              </select>
             </FormGroup>
           </Col>
           {/* --------------------------------- */}
@@ -1729,9 +1787,15 @@ const InputForm = () => {
           contactPersonMobile={contactPersonMobile}
           wordNo={wordNo}
           modeOfAdmission={modeOfAdmission}
-          dateOfAdmission={dateOfAdmission && `${dateOfAdmission?.getDate()}/${dateOfAdmission?.getMonth()}/${dateOfAdmission?.getYear()}`}
-          dateOfDischarge={dateOfDischarge && `${dateOfDischarge?.getDate()}/${dateOfDischarge?.getMonth()}/${dateOfDischarge?.getYear()}`}
-          totalDays = {Difference_In_Days}
+          dateOfAdmission={
+            dateOfAdmission &&
+            `${dateOfAdmission?.getDate()}/${dateOfAdmission?.getMonth()}/${dateOfAdmission?.getYear()}`
+          }
+          dateOfDischarge={
+            dateOfDischarge &&
+            `${dateOfDischarge?.getDate()}/${dateOfDischarge?.getMonth()}/${dateOfDischarge?.getYear()}`
+          }
+          totalDays={Difference_In_Days}
           physicalScience={physicalScience}
           primaryConsultantDepartment={primaryConsultantDepartment?.name}
           primaryConsultant={primaryConsultant}
@@ -1753,7 +1817,6 @@ const InputForm = () => {
           investigation={investigation}
           followUp={followUp}
           followUpDate={moment(followUpDate).format("MMM Do YY")}
-
           // followUpDate={followUpDate}
           dietaryAdvice={dietaryAdvice}
           ref={componentRef}
