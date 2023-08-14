@@ -541,7 +541,7 @@ const InputForm = () => {
                 <Input
                   id="word_cabin_no"
                   name="word_cabin_no"
-                  placeholder="Word/Cabin No"
+                  placeholder="Ward/Cabin No"
                   type="text"
                   // {...register("word_cabin_no")}
                   value={wordNo}
