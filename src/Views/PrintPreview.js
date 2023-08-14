@@ -852,6 +852,12 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         <th scope="col" style={{ textAlign: "start" }}>
                           <p style={{ fontSize: ".9rem", margin: "0" }}>
                             {" "}
+                            Strength
+                          </p>
+                        </th>
+                        <th scope="col" style={{ textAlign: "start" }}>
+                          <p style={{ fontSize: ".9rem", margin: "0" }}>
+                            {" "}
                             Doses{" "}
                           </p>
                         </th>
@@ -859,6 +865,12 @@ const PrintPreview = React.forwardRef((props, ref) => {
                           <p style={{ fontSize: ".9rem", margin: "0" }}>
                             {" "}
                             Duration{" "}
+                          </p>
+                        </th>
+                        <th scope="col" style={{ textAlign: "start" }}>
+                          <p style={{ fontSize: ".9rem", margin: "0" }}>
+                            {" "}
+                            Prandial advice{" "}
                           </p>
                         </th>
                         <th scope="col" style={{ textAlign: "start" }}>
@@ -882,12 +894,22 @@ const PrintPreview = React.forwardRef((props, ref) => {
                               </td>
                               <td style={{ textAlign: "start" }}>
                                 <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                  {m.strength}{" "}
+                                </p>
+                              </td>
+                              <td style={{ textAlign: "start" }}>
+                                <p style={{ fontSize: ".9rem", margin: "0" }}>
                                   {m.doses}{" "}
                                 </p>
                               </td>
                               <td style={{ textAlign: "start" }}>
                                 <p style={{ fontSize: ".9rem", margin: "0" }}>
                                   {m.duration}{" "}
+                                </p>
+                              </td>
+                              <td style={{ textAlign: "start" }}>
+                                <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                  {m.prandial_advice}{" "}
                                 </p>
                               </td>
                               <td style={{ textAlign: "start" }}>
@@ -912,61 +934,83 @@ const PrintPreview = React.forwardRef((props, ref) => {
                       Dischage Medication :
                     </h6>
                     <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th scope="col" style={{ textAlign: "start" }}>
-                            <p style={{ fontSize: ".9rem", margin: "0" }}>
-                              {" "}
-                              Brand/Geneic Name :
-                            </p>
-                          </th>
-                          <th scope="col" style={{ textAlign: "start" }}>
-                            <p style={{ fontSize: ".9rem", margin: "0" }}>
-                              {" "}
-                              Doses{" "}
-                            </p>
-                          </th>
-                          <th scope="col" style={{ textAlign: "start" }}>
-                            <p style={{ fontSize: ".9rem", margin: "0" }}>
-                              {" "}
-                              Duration{" "}
-                            </p>
-                          </th>
-                          <th scope="col" style={{ textAlign: "start" }}>
-                            <p style={{ fontSize: ".9rem", margin: "0" }}>
-                              {" "}
-                              Note{" "}
-                            </p>
-                          </th>
-                        </tr>
-                      </thead>
+                    <thead>
+                      <tr>
+                        <th scope="col" style={{ textAlign: "start" }}>
+                          <p style={{ fontSize: ".9rem", margin: "0" }}>
+                            {" "}
+                            Brand/Geneic Name :
+                          </p>
+                        </th>
+                        <th scope="col" style={{ textAlign: "start" }}>
+                          <p style={{ fontSize: ".9rem", margin: "0" }}>
+                            {" "}
+                            Strength
+                          </p>
+                        </th>
+                        <th scope="col" style={{ textAlign: "start" }}>
+                          <p style={{ fontSize: ".9rem", margin: "0" }}>
+                            {" "}
+                            Doses{" "}
+                          </p>
+                        </th>
+                        <th scope="col" style={{ textAlign: "start" }}>
+                          <p style={{ fontSize: ".9rem", margin: "0" }}>
+                            {" "}
+                            Duration{" "}
+                          </p>
+                        </th>
+                        <th scope="col" style={{ textAlign: "start" }}>
+                          <p style={{ fontSize: ".9rem", margin: "0" }}>
+                            {" "}
+                            Prandial advice{" "}
+                          </p>
+                        </th>
+                        <th scope="col" style={{ textAlign: "start" }}>
+                          <p style={{ fontSize: ".9rem", margin: "0" }}>
+                            {" "}
+                            Note{" "}
+                          </p>
+                        </th>
+                      </tr>
+                    </thead>
                       <tbody>
                         {dischargeMedication?.map((m) => {
                           return (
                             m?.brandName && (
                               <tr>
-                                <td style={{ textAlign: "start" }}>
-                                  {" "}
-                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                    {m.brandName}{" "}
-                                  </p>
-                                </td>
-                                <td style={{ textAlign: "start" }}>
-                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                    {m.doses}{" "}
-                                  </p>
-                                </td>
-                                <td style={{ textAlign: "start" }}>
-                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                    {m.duration}{" "}
-                                  </p>
-                                </td>
-                                <td style={{ textAlign: "start" }}>
-                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                    {m.note}
-                                  </p>
-                                </td>
-                              </tr>
+                              <td style={{ textAlign: "start" }}>
+                                {" "}
+                                <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                  {m.brandName}{" "}
+                                </p>
+                              </td>
+                              <td style={{ textAlign: "start" }}>
+                                <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                  {m.strength}{" "}
+                                </p>
+                              </td>
+                              <td style={{ textAlign: "start" }}>
+                                <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                  {m.doses}{" "}
+                                </p>
+                              </td>
+                              <td style={{ textAlign: "start" }}>
+                                <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                  {m.duration}{" "}
+                                </p>
+                              </td>
+                              <td style={{ textAlign: "start" }}>
+                                <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                  {m.prandial_advice}{" "}
+                                </p>
+                              </td>
+                              <td style={{ textAlign: "start" }}>
+                                <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                  {m.note}
+                                </p>
+                              </td>
+                            </tr>
                             )
                           );
                         })}

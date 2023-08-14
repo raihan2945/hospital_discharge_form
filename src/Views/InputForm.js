@@ -255,22 +255,22 @@ const InputForm = () => {
 
     if (property === "brandName") {
       newDischargeMedication[index].brandName = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     } else if (property === "doses") {
       newDischargeMedication[index].doses = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     } else if (property === "strength") {
       newDischargeMedication[index].strength = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     } else if (property === "duration") {
       newDischargeMedication[index].duration = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     } else if (property === "prandial_advice") {
       newDischargeMedication[index].prandial_advice = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     } else if (property === "note") {
       newDischargeMedication[index].note = e;
-      setDischareMedication(newDischargeMedication);
+      setDrugTreatment(newDischargeMedication);
     }
   };
   const addDrugTreatment = () => {
@@ -806,7 +806,7 @@ const InputForm = () => {
                         style={{ textAlign: "start", marginBottom: ".5rem" }}
                       >
                         <label style={{ textAlign: "start" }}>
-                          Department :
+                          Department : 
                         </label>
                       </div>
 
