@@ -550,7 +550,7 @@ const InputForm = () => {
               </FormGroup>
             </Col>
 
-            <div style={{ opacity: !patientName && !age && !wordNo && .4, pointerEvents: !patientName && !age && !wordNo && "none" }}>
+            <div style={{ opacity:  !patientName || !age || !wordNo ? .4 : "", pointerEvents: !patientName || !age || !wordNo ?  "none" : "" }}>
               <Row>
 
                 <Col md={6}>
