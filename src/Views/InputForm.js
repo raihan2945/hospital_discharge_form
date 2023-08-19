@@ -177,7 +177,9 @@ const InputForm = () => {
   ];
   const [investigation, setInvestigation] = useState([]);
   const [followUp, setFollowUp] = useState([]);
-  const [procedure, setProcedure] = useState()
+  const [procedure, setProcedure] = useState();
+  const [procedureDate, setProcedureDate] = useState();
+  const [procedureReport, setProcedureReport] = useState();
   const [moodOfDischarge, setMoodOfDischarge] = useState([]);
   const [followUpDate, setFollowUpDate] = useState();
   const [dietaryAdvice, setDietaryAdvice] = useState();
@@ -246,6 +248,11 @@ const InputForm = () => {
     ];
     setDischareMedication(defaultMedication);
   };
+  const removeDischareMedication = (index) => {
+    const newI = [...dischargeMedication];
+    newI.splice(index, 1);
+    setDischareMedication(newI);
+  };
 
   //Drug treatment
 
@@ -289,6 +296,11 @@ const InputForm = () => {
     // alert("im called")
 
     setDrugTreatment(defaultDrugTreatment);
+  };
+  const removeDrugTreatment = (index) => {
+    const newI = [...drugTreatment];
+    newI.splice(index, 1);
+    setDrugTreatment(newI);
   };
 
   // ----------INVESTIGATION---------
@@ -335,18 +347,57 @@ const InputForm = () => {
 
     console.log("sInvetigation is : ", sInvestigation);
 
-    setInvestigation([
-      ...investigation,
-      {
-        pValue: {
-          id: sInvestigation.value,
-          name: sInvestigation.label,
-        },
-        name: "",
-        value: "",
-        date: new Date(),
+    const allInvestions = await subInvestigations.filter(
+      (i) => i.pId == sInvestigation.value
+    );
+    const newinvestig = await allInvestions.map((inv) => ({
+      pValue: {
+        id: sInvestigation.value,
+        name: sInvestigation.label,
       },
-    ]);
+      name: inv.name,
+      value: "",
+      date: new Date(),
+    }));
+
+    console.log("all sub investigation is : ", newinvestig);
+
+    setInvestigation([...investigation, ...newinvestig]);
+
+    console.log("investigatins is :==========", investigation);
+
+    // allInvestions.map((inv) => setInvestigation([
+    //     ...investigation,
+    //     {
+    //       pValue: {
+    //         id: sInvestigation.value,
+    //         name: sInvestigation.label,
+    //       },
+    //       name: inv.name,
+    //       value: "",
+    //       date: new Date(),
+    //     },
+    //   ])
+    // );
+
+    // setInvestigation([
+    //   ...investigation,
+    //   {
+    //     pValue: {
+    //       id: sInvestigation.value,
+    //       name: sInvestigation.label,
+    //     },
+    //     name: "",
+    //     value: "",
+    //     date: new Date(),
+    //   },
+    // ]);
+  };
+
+  const removeInvestigation = (index) => {
+    const newI = [...investigation];
+    newI.splice(index, 1);
+    setInvestigation(newI);
   };
 
   const changeInvestigation = (e, property, index) => {
@@ -550,9 +601,13 @@ const InputForm = () => {
               </FormGroup>
             </Col>
 
-            <div style={{ opacity:  !patientName || !age || !wordNo ? .4 : "", pointerEvents: !patientName || !age || !wordNo ?  "none" : "" }}>
+            <div
+              style={{
+                opacity: !patientName || !age || !wordNo ? 0.4 : "",
+                pointerEvents: !patientName || !age || !wordNo ? "none" : "",
+              }}
+            >
               <Row>
-
                 <Col md={6}>
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
@@ -721,7 +776,7 @@ const InputForm = () => {
                       type="text"
                       // {...register("word_cabin_no")}
                       value={Difference_In_Days && Number(Difference_In_Days)}
-                    // onChange={(e) => setOthersConsultant(e.target.value)}
+                      // onChange={(e) => setOthersConsultant(e.target.value)}
                     />
                   </FormGroup>
                 </Col>
@@ -761,7 +816,10 @@ const InputForm = () => {
                           value: "Lactose Intolerance",
                           label: "Lactose Intolerance",
                         },
-                        { value: "Chronic Diarrhea", label: "Chronic Diarrhea" },
+                        {
+                          value: "Chronic Diarrhea",
+                          label: "Chronic Diarrhea",
+                        },
                         { value: "Constipation", label: "Constipation" },
                         {
                           value: "Gastroesophageal Reflux Disease (GERD)",
@@ -807,7 +865,10 @@ const InputForm = () => {
                       <Col md={primaryConsultantDepartment?.unit ? 6 : 12}>
                         <FormGroup>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
                             <label style={{ textAlign: "start" }}>
                               Department :
@@ -838,17 +899,23 @@ const InputForm = () => {
                         <Col md={6}>
                           <FormGroup>
                             <div
-                              style={{ textAlign: "start", marginBottom: ".5rem" }}
+                              style={{
+                                textAlign: "start",
+                                marginBottom: ".5rem",
+                              }}
                             >
-                              <label style={{ textAlign: "start" }}>Unit :</label>
+                              <label style={{ textAlign: "start" }}>
+                                Unit :
+                              </label>
                             </div>
 
                             <select
                               // value={primaryConsultantDepartment?.name}
                               onChange={(e) => {
-                                const unit = primaryConsultantDepartment.unit.find(
-                                  (d) => d.id == e.target.value
-                                );
+                                const unit =
+                                  primaryConsultantDepartment.unit.find(
+                                    (d) => d.id == e.target.value
+                                  );
                                 console.log("unit is : ", unit);
                                 setPrimaryUnit(unit);
                               }}
@@ -857,7 +924,9 @@ const InputForm = () => {
                             >
                               <option selected>Select Unit</option>
                               {primaryConsultantDepartment?.unit?.map((d) => {
-                                return <option value={d?.id}> {d?.name}</option>;
+                                return (
+                                  <option value={d?.id}> {d?.name}</option>
+                                );
                               })}
                             </select>
                           </FormGroup>
@@ -868,7 +937,10 @@ const InputForm = () => {
                         <Col md={12}>
                           <FormGroup>
                             <div
-                              style={{ textAlign: "start", marginBottom: ".5rem" }}
+                              style={{
+                                textAlign: "start",
+                                marginBottom: ".5rem",
+                              }}
                             >
                               <label style={{ textAlign: "start" }}>
                                 Primary Consultant:
@@ -894,7 +966,9 @@ const InputForm = () => {
                               type="text"
                               // {...register("word_cabin_no")}
                               value={primaryConsultant}
-                              onChange={(e) => setPrimaryConsultant(e.target.value)}
+                              onChange={(e) =>
+                                setPrimaryConsultant(e.target.value)
+                              }
                             />
                           </FormGroup>
                         </Col>
@@ -927,7 +1001,9 @@ const InputForm = () => {
                 <Col md={12}>
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                      <label style={{ textAlign: "start" }}>Comorbidity :</label>
+                      <label style={{ textAlign: "start" }}>
+                        Comorbidity :
+                      </label>
                     </div>
 
                     {/* <CreatableSelect
@@ -1039,7 +1115,9 @@ const InputForm = () => {
                 <Col md={12}>
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                      <label style={{ textAlign: "start" }}>Case summary:</label>
+                      <label style={{ textAlign: "start" }}>
+                        Case summary:
+                      </label>
                     </div>
 
                     <Input
@@ -1053,7 +1131,6 @@ const InputForm = () => {
                     />
                   </FormGroup>
                 </Col>
-
               </Row>
 
               {/* Investigation */}
@@ -1067,7 +1144,9 @@ const InputForm = () => {
               >
                 <Row style={{ marginBottom: ".5rem" }}>
                   <Col sm={4} md={2}>
-                    <div style={{ textAlign: "start", verticalAlign: "center" }}>
+                    <div
+                      style={{ textAlign: "start", verticalAlign: "center" }}
+                    >
                       <label style={{ textAlign: "start", fontWeight: "600" }}>
                         Investigation :
                       </label>
@@ -1123,14 +1202,18 @@ const InputForm = () => {
                   return (
                     <Row style={{ marginTop: ".5rem" }}>
                       <Col md={4}>
-                        <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                          <label style={{ textAlign: "start" }}>
-                            {inv?.pValue.name} :
+                        <div
+                          style={{ textAlign: "start", marginBottom: ".5rem" }}
+                        >
+                          <label
+                            style={{ textAlign: "start", fontSize: ".9rem" }}
+                          >
+                            {inv?.pValue?.name} :
                           </label>
                         </div>
 
                         <select
-                          value={inv.name}
+                          value={inv?.name}
                           onChange={(e) =>
                             changeInvestigation(e.target.value, "name", index)
                           }
@@ -1139,9 +1222,9 @@ const InputForm = () => {
                         >
                           <option selected>Select a value</option>
                           {subInvestigations
-                            .filter((i) => i.pId == inv.pValue.id)
+                            .filter((i) => i?.pId == inv?.pValue?.id)
                             .map((v) => {
-                              return <option value={v.name}>{v.name}</option>;
+                              return <option value={v?.name}>{v?.name}</option>;
                             })}
                           {/* {mainInvestigations?.map((mIn) => {
                         return <option value={mIn.id}>{mIn.name}</option>;
@@ -1160,8 +1243,14 @@ const InputForm = () => {
                     /> */}
                       </Col>
                       <Col md={4}>
-                        <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                          <label style={{ textAlign: "start" }}>Value :</label>
+                        <div
+                          style={{ textAlign: "start", marginBottom: ".5rem" }}
+                        >
+                          <label
+                            style={{ textAlign: "start", fontSize: ".9rem" }}
+                          >
+                            Value :
+                          </label>
                         </div>
                         <Input
                           id="department"
@@ -1174,17 +1263,46 @@ const InputForm = () => {
                           }
                         />
                       </Col>
-                      <Col md={4}>
-                        <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                          <label style={{ textAlign: "start" }}>Date :</label>
+                      <Col md={3}>
+                        <div
+                          style={{ textAlign: "start", marginBottom: ".5rem" }}
+                        >
+                          <label
+                            style={{ textAlign: "start", fontSize: ".9rem" }}
+                          >
+                            Date :
+                          </label>
                         </div>
 
                         <DatePicker
                           id="datepicker"
                           selected={inv.date}
-                          onChange={(e) => changeInvestigation(e, "date", index)}
+                          onChange={(e) =>
+                            changeInvestigation(e, "date", index)
+                          }
                           dateFormat="dd/MM/yyyy"
                         />
+                      </Col>
+                      <Col md={1}>
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <i
+                            onClick={() => removeInvestigation(index)}
+                            class="fas fa-trash"
+                            style={{
+                              marginTop: "30px",
+                              cursor: "pointer",
+                              color: "red",
+                            }}
+                          ></i>
+                        </div>
                       </Col>
                     </Row>
                   );
@@ -1217,15 +1335,22 @@ const InputForm = () => {
                       <Row style={{ marginTop: ".5rem" }}>
                         <Col md={2}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>
-                              Brand/Generic Name :
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Brand/Generic Name:
                             </label>
                           </div>
                           <ReactSearchAutocomplete
                             items={AllMedicine}
-                            fuseOptions={{ keys: ["brand_name", "generic_name"] }} // Search on both fields
+                            fuseOptions={{
+                              keys: ["brand_name", "generic_name"],
+                            }} // Search on both fields
                             resultStringKeyName="brand_name" // String to display in the results
                             onSearch={handleOnSearch}
                             onHover={handleOnHover}
@@ -1260,9 +1385,16 @@ const InputForm = () => {
                         </Col>
                         <Col md={1}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>Strength :</label>
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Strength:
+                            </label>
                           </div>
                           <Input
                             id="doses"
@@ -1272,15 +1404,26 @@ const InputForm = () => {
                             // {...register("word_cabin_no")}
                             value={m?.strength}
                             onChange={(e) =>
-                              changeDrugTreatment(e.target.value, "strength", index)
+                              changeDrugTreatment(
+                                e.target.value,
+                                "strength",
+                                index
+                              )
                             }
                           />
                         </Col>
                         <Col md={2}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>Doses :</label>
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Doses:
+                            </label>
                           </div>
                           <Input
                             id="doses"
@@ -1290,15 +1433,26 @@ const InputForm = () => {
                             // {...register("word_cabin_no")}
                             value={m.doses}
                             onChange={(e) =>
-                              changeDrugTreatment(e.target.value, "doses", index)
+                              changeDrugTreatment(
+                                e.target.value,
+                                "doses",
+                                index
+                              )
                             }
                           />
                         </Col>
                         <Col md={2}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>Duration :</label>
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Duration:
+                            </label>
                           </div>
                           <Input
                             id="department"
@@ -1308,16 +1462,25 @@ const InputForm = () => {
                             // {...register("word_cabin_no")}
                             value={m.duration}
                             onChange={(e) =>
-                              changeDrugTreatment(e.target.value, "duration", index)
+                              changeDrugTreatment(
+                                e.target.value,
+                                "duration",
+                                index
+                              )
                             }
                           />
                         </Col>
                         <Col md={2}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>
-                              Prandial advice :
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Prandial advice:
                             </label>
                           </div>
                           <select
@@ -1336,11 +1499,18 @@ const InputForm = () => {
                             <option value="After meal">After meal</option>
                           </select>
                         </Col>
-                        <Col md={3}>
+                        <Col md={3} style={{ position: "relative" }}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>Note :</label>
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Note:
+                            </label>
                           </div>
                           <Input
                             id="department"
@@ -1353,6 +1523,15 @@ const InputForm = () => {
                               changeDrugTreatment(e.target.value, "note", index)
                             }
                           />
+                          <div
+                            style={{ position: "absolute", top: 2, right: 12 }}
+                          >
+                            <i
+                              onClick={() => removeDrugTreatment(index)}
+                              class="fas fa-times"
+                              style={{ color: "red", cursor: "pointer" }}
+                            ></i>
+                          </div>
                         </Col>
                       </Row>
                     );
@@ -1360,7 +1539,9 @@ const InputForm = () => {
 
                 <Row style={{ marginTop: "1rem" }}>
                   <Col md={12}>
-                    <Button onClick={() => addDrugTreatment()}>+ ADD NEW</Button>
+                    <Button onClick={() => addDrugTreatment()}>
+                      + ADD NEW
+                    </Button>
                   </Col>
                 </Row>
               </div>
@@ -1384,17 +1565,24 @@ const InputForm = () => {
                       <Row style={{ marginTop: ".5rem" }}>
                         <Col md={2}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>
-                              Brand/Generic Name :
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Brand/Generic Name:
                             </label>
                           </div>
 
                           <ReactSearchAutocomplete
                             items={AllMedicine}
                             formatResult={(item) => formatResult(item, index)}
-                            fuseOptions={{ keys: ["brand_name", "generic_name"] }} // Search on both fields
+                            fuseOptions={{
+                              keys: ["brand_name", "generic_name"],
+                            }} // Search on both fields
                             resultStringKeyName="brand_name" // String to display in the results
                             onSearch={handleOnSearch}
                             onHover={handleOnHover}
@@ -1440,9 +1628,16 @@ const InputForm = () => {
                         </Col>
                         <Col md={1}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>Strength :</label>
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Strength:
+                            </label>
                           </div>
                           <Input
                             id="doses"
@@ -1452,15 +1647,26 @@ const InputForm = () => {
                             // {...register("word_cabin_no")}
                             value={m?.strength}
                             onChange={(e) =>
-                              changeMedication(e.target.value, "strength", index)
+                              changeMedication(
+                                e.target.value,
+                                "strength",
+                                index
+                              )
                             }
                           />
                         </Col>
                         <Col md={2}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>Doses :</label>
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Doses:
+                            </label>
                           </div>
                           <Input
                             id="doses"
@@ -1476,9 +1682,16 @@ const InputForm = () => {
                         </Col>
                         <Col md={2}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>Duration :</label>
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Duration:
+                            </label>
                           </div>
                           <Input
                             id="department"
@@ -1488,16 +1701,25 @@ const InputForm = () => {
                             // {...register("word_cabin_no")}
                             value={m.duration}
                             onChange={(e) =>
-                              changeMedication(e.target.value, "duration", index)
+                              changeMedication(
+                                e.target.value,
+                                "duration",
+                                index
+                              )
                             }
                           />
                         </Col>
                         <Col md={2}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>
-                              Prandial advice :
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Prandial advice:
                             </label>
                           </div>
                           <select
@@ -1516,11 +1738,18 @@ const InputForm = () => {
                             <option value="After meal">After meal</option>
                           </select>
                         </Col>
-                        <Col md={3}>
+                        <Col md={3} style={{ position: "relative" }}>
                           <div
-                            style={{ textAlign: "start", marginBottom: ".5rem" }}
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
                           >
-                            <label style={{ textAlign: "start" }}>Note :</label>
+                            <label
+                              style={{ textAlign: "start", fontSize: ".9rem" }}
+                            >
+                              Note:
+                            </label>
                           </div>
                           <Input
                             id="department"
@@ -1533,6 +1762,15 @@ const InputForm = () => {
                               changeMedication(e.target.value, "note", index)
                             }
                           />
+                          <div
+                            style={{ position: "absolute", top: 2, right: 12 }}
+                          >
+                            <i
+                              onClick={() => removeDischareMedication(index)}
+                              class="fas fa-times"
+                              style={{ color: "red", cursor: "pointer" }}
+                            ></i>
+                          </div>
                         </Col>
                       </Row>
                     );
@@ -1545,40 +1783,68 @@ const InputForm = () => {
                 </Row>
               </div>
 
-
               {/* ------------------------------------------------------------------------- */}
               <Col md={12} style={{ marginTop: "1rem" }}>
-                <FormGroup>
-                  <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                    <label style={{ textAlign: "start" }}>
-                      Procedure / Operation performed :
-                    </label>
-                  </div>
+                <Row>
+                  <Col md={4}>
+                    <FormGroup>
+                      <div
+                        style={{ textAlign: "start",}}
+                      >
+                        <label style={{ textAlign: "start",marginBottom: ".5rem"  }}>
+                          Procedure / Operation performed :
+                        </label>
+                      </div>
+                      <select
+                        value={procedure}
+                        onChange={(e) => setProcedure(e.target.value)}
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <option value="Endoscopy">Endoscopy</option>
+                        <option value="Colonoscopy">Colonoscopy</option>
+                        <option value="ERCP">ERCP</option>
+                        <option value="Pneumatic Balloon Dilatation">
+                          Pneumatic Balloon Dilatation
+                        </option>
+                        <option value="Written with date & report">
+                          Written with date & report
+                        </option>
+                      </select>
+                    </FormGroup>
+                  </Col>
+                  <Col md={4}>
+                  <FormGroup>
+                    <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                      <label style={{ textAlign: "start" }}>Report :</label>
+                    </div>
 
-                  {/* <Input
-                id="department"
-                name="word_cabin_no"
-                placeholder=""
-                type="text"
-                // {...register("word_cabin_no")}
-                value={dcs}
-                onChange={(e) => setDcs(e.target.value)}
-              /> */}
-                  <select
-                    value={procedure}
-                    onChange={(e) =>
-                      setProcedure(e.target.value)
-                    }
-                    class="form-select"
-                    aria-label="Default select example"
-                  >
-                    <option value="Endoscopy">Endoscopy</option>
-                    <option value="Colonoscopy">Colonoscopy</option>
-                    <option value="ERCP">ERCP</option>
-                    <option value="Pneumatic Balloon Dilatation">Pneumatic Balloon Dilatation</option>
-                    <option value="Written with date & report">Written with date & report</option>
-                  </select>
-                </FormGroup>
+                    <Input
+                      id="follow_up"
+                      name="follow_up"
+                      // placeholder="Follow Up"
+                      type="text"
+                      // {...register("word_cabin_no")}
+                      value={procedureReport}
+                      onChange={(e) => setProcedureReport(e.target.value)}
+                    />
+                  </FormGroup>
+                </Col>
+                  <Col md={4}>
+                  <FormGroup>
+                    <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                      <label style={{ textAlign: "start" }}>Date :</label>
+                    </div>
+
+                    <DatePicker
+                      id="datepicker"
+                      selected={procedureDate}
+                      onChange={setProcedureDate}
+                      formate="dd-mm-yyyy"
+                    />
+                  </FormGroup>
+                </Col>
+                </Row>
               </Col>
               {/* --------------------------------- */}
               <Col md={12}>
@@ -1596,7 +1862,9 @@ const InputForm = () => {
                     aria-label="Default select example"
                   >
                     <option value="">Select an option</option>
-                    <option value="Discharge to home">Dishcharge to Home</option>
+                    <option value="Discharge to home">
+                      Dishcharge to Home
+                    </option>
                     <option value="Referred to other hospital">
                       Referred to other hospital
                     </option>
@@ -1651,7 +1919,9 @@ const InputForm = () => {
                 <Col md={12}>
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                      <label style={{ textAlign: "start" }}>Dietary Advice :</label>
+                      <label style={{ textAlign: "start" }}>
+                        Dietary Advice :
+                      </label>
                     </div>
 
                     <Input
@@ -1669,19 +1939,24 @@ const InputForm = () => {
 
               <Row>
                 <Col md={6}>
-                  <Button color="primary" style={{ width: "100%" }} type="submit">
+                  <Button
+                    color="primary"
+                    style={{ width: "100%" }}
+                    type="submit"
+                  >
                     Save
                   </Button>
                 </Col>
                 <Col md={6}>
-                  <Button onClick={() => handlePrint()} style={{ width: "100%" }}>
+                  <Button
+                    onClick={() => handlePrint()}
+                    style={{ width: "100%" }}
+                  >
                     Print
                   </Button>
                 </Col>
               </Row>
             </div>
-
-
 
             {/* --------------------------------- */}
             {/* <Col md={6}>
@@ -1784,15 +2059,10 @@ const InputForm = () => {
               </FormGroup>
             </Col> */}
             {/* --------------------------------- */}
-
           </Row>
           {/* ------------------------------------------ */}
 
-
-
-
           {/* --------------------------------- */}
-
         </Form>
       </div>
       <div style={{ display: "none" }}>
