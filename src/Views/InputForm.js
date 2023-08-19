@@ -180,6 +180,7 @@ const InputForm = () => {
   const [procedure, setProcedure] = useState();
   const [procedureDate, setProcedureDate] = useState();
   const [procedureReport, setProcedureReport] = useState();
+  const [procedureNote, setProcedureNote] = useState();
   const [moodOfDischarge, setMoodOfDischarge] = useState([]);
   const [followUpDate, setFollowUpDate] = useState();
   const [dietaryAdvice, setDietaryAdvice] = useState();
@@ -1813,7 +1814,25 @@ const InputForm = () => {
                       </select>
                     </FormGroup>
                   </Col>
-                  <Col md={4}>
+                  <Col md={3}>
+                  <FormGroup>
+                    <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                      <label style={{ textAlign: "start" }}>Note :</label>
+                    </div>
+
+                    <Input
+                      id="follow_up"
+                      name="follow_up"
+                      // placeholder="Follow Up"
+                      type="text"
+                      // {...register("word_cabin_no")}
+                      value={procedureNote}
+                      onChange={(e) => setProcedureNote(e.target.value)}
+                    />
+                  </FormGroup>
+                </Col>
+                  <Col md={3}>
+
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                       <label style={{ textAlign: "start" }}>Report :</label>
@@ -1830,7 +1849,7 @@ const InputForm = () => {
                     />
                   </FormGroup>
                 </Col>
-                  <Col md={4}>
+                  <Col md={2}>
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                       <label style={{ textAlign: "start" }}>Date :</label>
