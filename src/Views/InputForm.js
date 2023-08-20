@@ -119,6 +119,7 @@ const InputForm = () => {
   const [patientName, setPatientName] = useState("");
   const [patientPhone, setPatientPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [nid, setNid] = useState()
   const [patinetGender, setPatientGender] = useState("");
   const [age, setAge] = useState();
   const [id, setId] = useState();
@@ -646,7 +647,24 @@ const InputForm = () => {
                   </FormGroup>
                 </Col>
 
-                <Col md={12}>
+                <Col md={6}>
+                  <FormGroup>
+                    <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                      <label style={{ textAlign: "start" }}>NID :</label>
+                    </div>
+
+                    <Input
+                      id="nid"
+                      name="nid"
+                      placeholder="NID"
+                      type="text"
+                      // {...register("patient_phone")}
+                      value={nid}
+                      onChange={(e) => setNid(e.target.value)}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                       <label style={{ textAlign: "start" }}>Email :</label>
@@ -1808,8 +1826,8 @@ const InputForm = () => {
                         <option value="Pneumatic Balloon Dilatation">
                           Pneumatic Balloon Dilatation
                         </option>
-                        <option value="Written with date & report">
-                          Written with date & report
+                        <option value="others">
+                         Others
                         </option>
                       </select>
                     </FormGroup>
