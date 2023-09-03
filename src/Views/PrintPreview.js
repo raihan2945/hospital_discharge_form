@@ -262,7 +262,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         fontSize: "1rem",
                       }}
                     >
-                      Word/Cabin No :
+                      Ward/Cabin No :
                     </p>
                   </div>
                   <div>

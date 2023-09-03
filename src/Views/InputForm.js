@@ -104,6 +104,29 @@ const allDepartments = [
   },
 ];
 
+const allProcedure = [
+  {
+    id: 1,
+    name: "Endoscopy"
+  },
+  {
+    id: 2,
+    name: "Colonoscopy"
+  },
+  {
+    id: 3,
+    name: "ERCP"
+  },
+  {
+    id: 4,
+    name: "Pneumatic Ballon Dilatation"
+  },
+  {
+    id: 5,
+    name: "Others"
+  },
+]
+
 const InputForm = () => {
   // console.log("all medicine is : ", AllMedicine);
   // ---states
@@ -178,13 +201,14 @@ const InputForm = () => {
   ];
   const [investigation, setInvestigation] = useState([]);
   const [followUp, setFollowUp] = useState([]);
-  const [procedure, setProcedure] = useState();
+  const [procedure, setProcedure] = useState([]);
   const [procedureDate, setProcedureDate] = useState();
   const [procedureReport, setProcedureReport] = useState();
   const [procedureNote, setProcedureNote] = useState();
   const [moodOfDischarge, setMoodOfDischarge] = useState([]);
   const [followUpDate, setFollowUpDate] = useState();
-  const [dietaryAdvice, setDietaryAdvice] = useState();
+  const [advice, setAdvice] = useState();
+  const [dietaryAdvice, setDietaryAdvice] = useState([]);
 
   // const [contactPersonName, setContactPersonName] = useState();
 
@@ -415,6 +439,45 @@ const InputForm = () => {
     } else if (property === "date") {
       newInvestigation[index].date = e;
       setInvestigation(newInvestigation);
+    }
+  };
+
+  // ----------Procedure---------
+
+  const addProcedure = async (input) => {
+    const newProcedure = [...procedure, {
+      name: input,
+      note: "",
+      report: "",
+      date: ""
+    }]
+
+    setProcedure(newProcedure)
+  };
+
+
+  const removeProcedure = (index) => {
+    const newI = [...procedure];
+    newI.splice(index, 1);
+    setProcedure(newI);
+  };
+
+  const changeProcedure = (e, property, index) => {
+    // console.log("text is : ", e, index);
+    const newProcedure = [...procedure];
+
+    if (property === "name") {
+      newProcedure[index].name = e;
+      setProcedure(newProcedure);
+    } else if (property === "note") {
+      newProcedure[index].note = e;
+      setProcedure(newProcedure);
+    } else if (property === "report") {
+      newProcedure[index].report = e;
+      setProcedure(newProcedure);
+    } else if (property === "date") {
+      newProcedure[index].date = e;
+      setProcedure(newProcedure);
     }
   };
 
@@ -795,7 +858,7 @@ const InputForm = () => {
                       type="text"
                       // {...register("word_cabin_no")}
                       value={Difference_In_Days && Number(Difference_In_Days)}
-                      // onChange={(e) => setOthersConsultant(e.target.value)}
+                    // onChange={(e) => setOthersConsultant(e.target.value)}
                     />
                   </FormGroup>
                 </Col>
@@ -1803,90 +1866,137 @@ const InputForm = () => {
               </div>
 
               {/* ------------------------------------------------------------------------- */}
-              <Col md={12} style={{ marginTop: "1rem" }}>
-                <Row>
-                  <Col md={4}>
-                    <FormGroup>
-                      <div
-                        style={{ textAlign: "start",}}
-                      >
-                        <label style={{ textAlign: "start",marginBottom: ".5rem"  }}>
-                          Procedure / Operation performed :
-                        </label>
-                      </div>
-                      <select
-                        value={procedure}
-                        onChange={(e) => setProcedure(e.target.value)}
-                        class="form-select"
-                        aria-label="Default select example"
-                      >
-                        <option value="Endoscopy">Endoscopy</option>
-                        <option value="Colonoscopy">Colonoscopy</option>
-                        <option value="ERCP">ERCP</option>
-                        <option value="Pneumatic Balloon Dilatation">
-                          Pneumatic Balloon Dilatation
-                        </option>
-                        <option value="others">
-                         Others
-                        </option>
-                      </select>
-                    </FormGroup>
+
+              <div
+                style={{
+                  marginTop: ".5rem",
+                  border: "1px solid #CED4DA",
+                  padding: "1rem",
+                  boxShadow: "rgba(0, 0, 0, 0.03) 0px 1px 4px",
+                  backgroundColor: "#cce4f5",
+                }}
+              >
+                <Row style={{ marginBottom: ".5rem" }}>
+                  <Col sm={4} md={4}>
+                    <div
+                      style={{ textAlign: "start", verticalAlign: "center" }}
+                    >
+                      <label style={{ textAlign: "start", fontWeight: "600" }}>
+                        Procedure / Operation performed :
+                      </label>
+                    </div>
                   </Col>
-                  <Col md={3}>
-                  <FormGroup>
-                    <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                      <label style={{ textAlign: "start" }}>Note :</label>
-                    </div>
-
-                    <Input
-                      id="follow_up"
-                      name="follow_up"
-                      // placeholder="Follow Up"
-                      type="text"
-                      // {...register("word_cabin_no")}
-                      value={procedureNote}
-                      onChange={(e) => setProcedureNote(e.target.value)}
-                    />
-                  </FormGroup>
-                </Col>
-                  <Col md={3}>
-
-                  <FormGroup>
-                    <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                      <label style={{ textAlign: "start" }}>Report :</label>
-                    </div>
-
-                    <Input
-                      id="follow_up"
-                      name="follow_up"
-                      // placeholder="Follow Up"
-                      type="text"
-                      // {...register("word_cabin_no")}
-                      value={procedureReport}
-                      onChange={(e) => setProcedureReport(e.target.value)}
-                    />
-                  </FormGroup>
-                </Col>
-                  <Col md={2}>
-                  <FormGroup>
-                    <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                      <label style={{ textAlign: "start" }}>Date :</label>
-                    </div>
-
-                    <DatePicker
-                      id="datepicker"
-                      selected={procedureDate}
-                      onChange={setProcedureDate}
-                      formate="dd-mm-yyyy"
-                    />
-                  </FormGroup>
-                </Col>
+                  <Col sm={8} md={8}>
+                    <select
+                      // value={pro}
+                      onChange={(e) => addProcedure(e.target.value)}
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
+                      <option disabled selected>
+                        Select a value
+                      </option>
+                      {allProcedure?.map((p) => {
+                        return <option value={p.name}>{p.name}</option>;
+                      })}
+                      {/* <option value="ARC 2">ARC 2</option> */}
+                    </select>
+                  </Col>
                 </Row>
-              </Col>
+
+                {procedure?.map((proc, index) => {
+                   
+                   return <Row style={{alignItems:"center"}}>
+                      <Col md={3}>
+                        <FormGroup>
+                        <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                            <label style={{ textAlign: "start" }}>Name : </label>
+                          </div>
+                          <input className="form-control" disabled value={proc?.name}/>
+                        </FormGroup>
+                      </Col>
+                      <Col md={3}>
+                        <FormGroup>
+                          <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                            <label style={{ textAlign: "start" }}>Note :</label>
+                          </div>
+
+                          <Input
+                            id="follow_up"
+                            name="follow_up"
+                            // placeholder="Follow Up"
+                            type="text"
+                            // {...register("word_cabin_no")}
+                            value={proc?.note}
+                            onChange={(e) => changeProcedure(e.target.value, 'note', index)}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col md={3}>
+
+                        <FormGroup>
+                          <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                            <label style={{ textAlign: "start" }}>Report :</label>
+                          </div>
+
+                          <Input
+                            id="follow_up"
+                            name="follow_up"
+                            // placeholder="Follow Up"
+                            type="text"
+                            // {...register("word_cabin_no")}
+                            value={proc?.report}
+                            onChange={(e) => changeProcedure(e.target.value, 'report', index)}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col md={2}>
+                        <FormGroup>
+                          <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                            <label style={{ textAlign: "start" }}>Date :</label>
+                          </div>
+
+                          {/* <DatePicker
+                            id="datepicker"
+                            selected={procedureDate}
+                            onChange={setProcedureDate}
+                            formate="dd-mm-yyyy"
+                          /> */}
+                          <input type="date" className="form-control" value={proc?.date} onChange={(e)=>changeProcedure(e.target.value, 'date', index)}/>
+                        </FormGroup>
+                      </Col>
+                      <Col md={1}>
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginTop:"-1rem"
+                          }}
+                        >
+                          <i
+                            onClick={() => removeProcedure(index)}
+                            class="fas fa-trash"
+                            style={{
+                              marginTop: "30px",
+                              cursor: "pointer",
+                              color: "red",
+                            }}
+                          ></i>
+                        </div>
+                      </Col>
+                    </Row>
+                 
+                })}
+
+              </div>
+
               {/* --------------------------------- */}
               <Col md={12}>
                 <FormGroup>
-                  <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                  <div style={{ textAlign: "start", marginBottom: ".5rem", marginTop: ".5rem" }}>
                     <label style={{ textAlign: "start" }}>
                       Mode of Discharge :
                     </label>
@@ -1906,7 +2016,7 @@ const InputForm = () => {
                       Referred to other hospital
                     </option>
                     <option value="Referred to other dipertment">
-                      Referred to other dipertment
+                    Referred to other department
                     </option>
                     <option value="Discharge on request">
                       Discharge on request
@@ -1957,18 +2067,75 @@ const InputForm = () => {
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                       <label style={{ textAlign: "start" }}>
-                        Dietary Advice :
+                         Advice :
                       </label>
                     </div>
 
                     <Input
-                      id="Dietary Advice"
-                      name="Dietary Advice"
-                      placeholder="Dietary Advice"
-                      type="textarea"
+                      id="Advice"
+                      name="Advice"
+                      placeholder="Advice"
+                      type="text"
                       // {...register("word_cabin_no")}
+                      value={advice}
+                      onChange={(e) => setAdvice(e.target.value)}
+                    />
+                  </FormGroup>
+                </Col>
+
+                <Col md={12}>
+                  <FormGroup>
+                    <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
+                      <label style={{ textAlign: "start" }}>
+                        Dietary Advice :
+                      </label>
+                    </div>
+
+                    <CreatableSelect
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          // borderColor: state.isFocused ? 'grey' : 'red',
+                          textAlign: "left",
+                        }),
+                      }}
+                      hideSelectedOptions={false}
+                      closeMenuOnSelect={false}
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      isMulti={true}
+                      name="form-field-name"
+                      isClearable
                       value={dietaryAdvice}
-                      onChange={(e) => setDietaryAdvice(e.target.value)}
+                      onChange={(value) => setDietaryAdvice(value)}
+                      options={[
+                        { value: "দুধ ও দুধ জাতীয় খাবার খাবেন না", label: " দুধ ও দুধ জাতীয় খাবার খাবেন না" },
+                        {
+                          value: "শাক জাতীয় খাবার খাবেন না",
+                          label: "শাক জাতীয় খাবার খাবেন না",
+                        },
+                        {
+                          value: "ভাজা-পোঁড়া খাবার কম খাবেন",
+                          label: "ভাজা-পোঁড়া খাবার কম খাবেন",
+                        },
+                        {
+                          value: "গমের তৈরি খাবার খাবেন না",
+                          label: "গমের তৈরি খাবার খাবেন না",
+                        },
+                        {
+                          value: "কোন বনাজী ও ভেষজ ওষুধ খাবেন না",
+                          label: "কোন বনাজী ও ভেষজ ওষুধ খাবেন না",
+                        },
+                        {
+                          value: "চর্বি জাতীয় খাবার খাবেন না",
+                          label: "চর্বি জাতীয় খাবার খাবেন না",
+                        },
+                        {
+                          value: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
+                          label: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
+                        }
+
+                      ]}
                     />
                   </FormGroup>
                 </Col>
@@ -2146,7 +2313,7 @@ const InputForm = () => {
           followUp={followUp}
           followUpDate={moment(followUpDate).format("MMM Do YY")}
           // followUpDate={followUpDate}
-          dietaryAdvice={dietaryAdvice}
+          // dietaryAdvice={dietaryAdvice}
           ref={componentRef}
         ></PrintPreview>
       </div>
