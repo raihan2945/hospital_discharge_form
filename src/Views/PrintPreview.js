@@ -456,7 +456,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         fontSize: "1rem",
                       }}
                     >
-                      {totalDays}
+                      {Number.isInteger(Number(totalDays)) && totalDays}
                     </p>
                   </div>
                 </div>
@@ -471,6 +471,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         margin: "0",
                         fontWeight: "500",
                         fontSize: "1rem",
+                        width:"max-content"
                       }}
                     >
                       Physical symptoms :
