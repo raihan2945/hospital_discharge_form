@@ -46,21 +46,6 @@ const PrintPreview = React.forwardRef((props, ref) => {
 
   // console.log("procedure is name : ", procedure);
 
-  const contentContainer = document.getElementById('contentContainer');
-  const pageHeight = 800; // Adjust this to your desired page height in pixels
-
-  
-  // Calculate the height of the content container
-  const contentHeight = contentContainer?.clientHeight;
-
-  // Check if the content exceeds the page height
-  if (contentHeight > pageHeight) {
-    // Insert a page break
-    const pageBreak = document.createElement('div');
-    pageBreak.className = 'page-break';
-    contentContainer.appendChild(pageBreak);
-  }
-
   return (
     <>
       <div
@@ -76,9 +61,11 @@ const PrintPreview = React.forwardRef((props, ref) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          // height:"100vh",
+          // backgroundColor:"red"
         }}
       >
-        <div className="page" style={{ position: "relative" }}>
+        <div className="page" style={{ position: "relative", height:"100%" }}>
           <div
             style={{
               display: "flex",
@@ -1220,7 +1207,8 @@ const PrintPreview = React.forwardRef((props, ref) => {
               bottom: '0',
               left: "50%",
               transform: "translate(-50%, -50%)",
-              textAlign: "center"
+              textAlign: "center",
+              pageBreakInside:"avoid"
             }}
           >
             <h6 style={{ fontSize: ".9rem", width: "max-content" }}>
