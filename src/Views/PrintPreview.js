@@ -1,5 +1,8 @@
 import React from "react";
 
+import "./printPreview.css";
+import moment from "moment";
+
 const PrintPreview = React.forwardRef((props, ref) => {
   const {
     initialDate,
@@ -34,20 +37,37 @@ const PrintPreview = React.forwardRef((props, ref) => {
     commentBox,
     dischargeMedication,
     investigation,
+    procedure,
     followUp,
     followUpDate,
+    advice,
     dietaryAdvice,
   } = props;
 
-  // console.log("patient name : ", patientName);
+  // console.log("procedure is name : ", procedure);
+
+  const contentContainer = document.getElementById('contentContainer');
+  const pageHeight = 800; // Adjust this to your desired page height in pixels
+
+  
+  // Calculate the height of the content container
+  const contentHeight = contentContainer?.clientHeight;
+
+  // Check if the content exceeds the page height
+  if (contentHeight > pageHeight) {
+    // Insert a page break
+    const pageBreak = document.createElement('div');
+    pageBreak.className = 'page-break';
+    contentContainer.appendChild(pageBreak);
+  }
 
   return (
     <>
       <div
         ref={ref}
-        className="container"
+        id="contentContainer"
+        className="container page"
         style={{
-          //   border: "1px solid #C2C2CA",
           borderRadius: "5px",
           padding: ".5rem 2rem",
           marginTop: "1rem",
@@ -58,12 +78,13 @@ const PrintPreview = React.forwardRef((props, ref) => {
           justifyContent: "space-between",
         }}
       >
-        <div>
+        <div className="page" style={{ position: "relative" }}>
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               gap: "1rem",
+
             }}
           >
             <img
@@ -80,8 +101,8 @@ const PrintPreview = React.forwardRef((props, ref) => {
             />
           </div>
 
-          <hr style={{ margin: ".4rem 0rem" }} />
-          <div>
+          {/* <hr style={{ margin: ".4rem 0rem" }} /> */}
+          <div style={{ marginTop: "1rem" }}>
             <div className="row">
               <div className="col-md-12" style={{ textAlign: "end" }}>
                 <div
@@ -708,74 +729,6 @@ const PrintPreview = React.forwardRef((props, ref) => {
               </div>
               {/* ------------------------------------------------ */}
               <hr style={{ margin: "0rem", opacity: "0.05" }} />
-              {/* <div className="col-md-12" style={{}}>
-            <div style={{ display: "flex", gap: "1rem" }}>
-              <div>
-                <p
-                  style={{ margin: "0", fontWeight: "500", fontSize: "1rem" }}
-                >
-                  Diagnosis :
-                </p>
-              </div>
-              <div>
-                <p
-                  style={{ margin: "0", fontWeight: "400", fontSize: "1rem" }}
-                >
-                  {diagnosisText}
-                </p>
-              </div>
-            </div>
-          </div> */}
-              {/* <div className="col-md-6" style={{}}>
-            <div style={{ display: "flex", gap: "1rem" }}>
-              <div>
-                <p
-                  style={{ margin: "0", fontWeight: "500", fontSize: "1rem" }}
-                >
-                  :
-                </p>
-              </div>
-              <div>
-                <p
-                  style={{ margin: "0", fontWeight: "400", fontSize: "1rem" }}
-                >
-                {diagnosisValue}
-                </p>
-              </div>
-            </div>
-          </div> */}
-              {/* ------------------------------------------------ */}
-              {/* <hr style={{ margin: " 0rem", opacity: "0.00" }} />
-          <div className="col-md-12" style={{}}>
-            <div
-              style={{
-                display: "flex",
-                gap: "1rem",
-                border: "1px solid #E4E4EC",
-                padding: ".5rem .5rem",
-              }}
-            >
-              <div>
-                <p
-                  style={{ margin: "0", fontWeight: "500", fontSize: "1rem" }}
-                >
-                  Comment:
-                </p>
-              </div>
-              <div>
-                <p
-                  style={{
-                    margin: "0",
-                    fontWeight: "400",
-                    fontSize: "1rem",
-                    textAlign: "start",
-                  }}
-                >
-                  {commentBox}
-                </p>
-              </div>
-            </div>
-          </div> */}
 
               {/* ------------------------------------------------ */}
               {Array.isArray(investigation) && investigation?.length > 0 && (
@@ -822,7 +775,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                               </td>
                               <td style={{ textAlign: "start" }}>
                                 <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {`m?.date`}{" "}
+                                  {moment(m.date).format("D/MM/YY")}
                                 </p>
                               </td>{" "}
                             </tr>
@@ -834,183 +787,91 @@ const PrintPreview = React.forwardRef((props, ref) => {
                 </>
               )}
               {/* ------------------------------------------------ */}
-              {Array.isArray(drugTreatment) && drugTreatment?.length > 0 && (
-                <>
-                  <hr style={{ margin: ".2rem 0rem", opacity: "0" }} />
-                  <h6 style={{ textAlign: "center" }}>
-                    Drug treatment during hospital :
-                  </h6>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Brand/Geneic Name :
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Strength
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Doses{" "}
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Duration{" "}
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Prandial advice{" "}
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Note{" "}
-                          </p>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {drugTreatment?.map((m) => {
-                        return (
-                          m?.brandName && (
-                            <tr>
-                              <td style={{ textAlign: "start" }}>
-                                {" "}
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.brandName}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.strength}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.doses}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.duration}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.prandial_advice}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.note}
-                                </p>
-                              </td>
-                            </tr>
-                          )
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </>
-              )}
-              {/* ------------------------------------------------ */}
-              {Array.isArray(dischargeMedication) &&
-                dischargeMedication.length > 0 && (
+              <div style={{ pageBreakInside: "avoid",}}>
+                {Array.isArray(drugTreatment) && drugTreatment?.length > 0 && (
                   <>
                     <hr style={{ margin: ".2rem 0rem", opacity: "0" }} />
                     <h6 style={{ textAlign: "center" }}>
-                      Dischage Medication :
+                      Drug treatment during hospital :
                     </h6>
                     <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Brand/Geneic Name :
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Strength
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Doses{" "}
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Duration{" "}
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Prandial advice{" "}
-                          </p>
-                        </th>
-                        <th scope="col" style={{ textAlign: "start" }}>
-                          <p style={{ fontSize: ".9rem", margin: "0" }}>
-                            {" "}
-                            Note{" "}
-                          </p>
-                        </th>
-                      </tr>
-                    </thead>
+                      <thead>
+                        <tr>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Brand/Geneic Name :
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Strength
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Doses{" "}
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Duration{" "}
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Prandial advice{" "}
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Note{" "}
+                            </p>
+                          </th>
+                        </tr>
+                      </thead>
                       <tbody>
-                        {dischargeMedication?.map((m) => {
+                        {drugTreatment?.map((m) => {
                           return (
                             m?.brandName && (
                               <tr>
-                              <td style={{ textAlign: "start" }}>
-                                {" "}
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.brandName}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.strength}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.doses}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.duration}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.prandial_advice}{" "}
-                                </p>
-                              </td>
-                              <td style={{ textAlign: "start" }}>
-                                <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                  {m.note}
-                                </p>
-                              </td>
-                            </tr>
+                                <td style={{ textAlign: "start" }}>
+                                  {" "}
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m.brandName}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m.strength}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m.doses}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m.duration}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m.prandial_advice}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m.note}
+                                  </p>
+                                </td>
+                              </tr>
                             )
                           );
                         })}
@@ -1018,35 +879,174 @@ const PrintPreview = React.forwardRef((props, ref) => {
                     </table>
                   </>
                 )}
+              </div>
+              {/* ------------------------------------------------ */}
+              <div style={{ pageBreakInside: "avoid" }}>
+                {Array.isArray(dischargeMedication) &&
+                  dischargeMedication.length > 0 && (
+                    <>
+                      <hr style={{ margin: ".2rem 0rem", opacity: "0" }} />
+                      <h6 style={{ textAlign: "center" }}>
+                        Dischage Medication :
+                      </h6>
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col" style={{ textAlign: "start" }}>
+                              <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                {" "}
+                                Brand/Geneic Name :
+                              </p>
+                            </th>
+                            <th scope="col" style={{ textAlign: "start" }}>
+                              <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                {" "}
+                                Strength
+                              </p>
+                            </th>
+                            <th scope="col" style={{ textAlign: "start" }}>
+                              <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                {" "}
+                                Doses{" "}
+                              </p>
+                            </th>
+                            <th scope="col" style={{ textAlign: "start" }}>
+                              <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                {" "}
+                                Duration{" "}
+                              </p>
+                            </th>
+                            <th scope="col" style={{ textAlign: "start" }}>
+                              <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                {" "}
+                                Prandial advice{" "}
+                              </p>
+                            </th>
+                            <th scope="col" style={{ textAlign: "start" }}>
+                              <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                {" "}
+                                Note{" "}
+                              </p>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dischargeMedication?.map((m) => {
+                            return (
+                              m?.brandName && (
+                                <tr>
+                                  <td style={{ textAlign: "start" }}>
+                                    {" "}
+                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                      {m.brandName}{" "}
+                                    </p>
+                                  </td>
+                                  <td style={{ textAlign: "start" }}>
+                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                      {m.strength}{" "}
+                                    </p>
+                                  </td>
+                                  <td style={{ textAlign: "start" }}>
+                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                      {m.doses}{" "}
+                                    </p>
+                                  </td>
+                                  <td style={{ textAlign: "start" }}>
+                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                      {m.duration}{" "}
+                                    </p>
+                                  </td>
+                                  <td style={{ textAlign: "start" }}>
+                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                      {m.prandial_advice}{" "}
+                                    </p>
+                                  </td>
+                                  <td style={{ textAlign: "start" }}>
+                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                      {m.note}
+                                    </p>
+                                  </td>
+                                </tr>
+                              )
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </>
+                  )}
+              </div>
               {/* ------------------------------------------------ */}
               <hr style={{ margin: "0rem 0rem", opacity: "0.00" }} />
-              <div className="col-md-6" style={{}}>
-                <div style={{ display: "flex", gap: "1rem" }}>
-                  <div>
-                    <p
-                      style={{
-                        margin: "0",
-                        fontWeight: "500",
-                        fontSize: "1rem",
-                      }}
-                    >
-                      Procedure / Operation performed :
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        margin: "0",
-                        fontWeight: "400",
-                        fontSize: "1rem",
-                        textAlign: "start",
-                      }}
-                    >
-                      {dcs}
-                    </p>
-                  </div>
-                </div>
+              <div style={{ pageBreakInside: "avoid" }}>
+
+                {Array.isArray(procedure) && procedure?.length > 0 && (
+                  <>
+                    <hr style={{ margin: ".2rem 0rem", opacity: "0" }} />
+                    <h6 style={{ textAlign: "center" }}>Procedure / Operation performed :</h6>
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              Name :
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Note{" "}
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Report{" "}
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Date{" "}
+                            </p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {procedure?.map((m) => {
+                          return (
+                            m?.name && (
+                              <tr>
+                                <td style={{ textAlign: "start" }}>
+                                  {" "}
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m?.name}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m?.note}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m?.report}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {`${m?.date}`}{" "}
+                                  </p>
+                                </td>{" "}
+                              </tr>
+                            )
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </>
+                )}
               </div>
+              {/* ------------------------------------------------------------ */}
               <div className="col-md-6" style={{}}>
                 <div style={{ display: "flex", gap: "1rem" }}>
                   <div>
@@ -1149,6 +1149,41 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         width: "max-content",
                       }}
                     >
+                      Advice :
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      style={{
+                        margin: "0",
+                        fontWeight: "400",
+                        fontSize: "1rem",
+                        textAlign: "start",
+                      }}
+                    >
+                      {advice}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {/* ------------------------------------------------ */}
+              <hr style={{ margin: "0rem 0rem", opacity: "0.2" }} />
+              <div className="col-md-12" style={{}}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "1rem",
+                  }}
+                >
+                  <div>
+                    <p
+                      style={{
+                        margin: "0",
+                        fontWeight: "500",
+                        fontSize: "1rem",
+                        width: "max-content",
+                      }}
+                    >
                       Dietary Advice :
                     </p>
                   </div>
@@ -1161,7 +1196,9 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         textAlign: "start",
                       }}
                     >
-                      {dietaryAdvice}
+                      {Array.isArray(dietaryAdvice) && dietaryAdvice?.map((adv, index)=>{
+                        return <span>{index !== 0 && ","} {adv?.value}</span>
+                      })}
                     </p>
                   </div>
                 </div>
@@ -1174,13 +1211,18 @@ const PrintPreview = React.forwardRef((props, ref) => {
           <div
             style={{
               // width: "100%",
-              textAlign: "center",
-              borderTop: "1px solid #6C757D",
-              marginTop: "2rem",
-              padding: ".2rem 0rem",
+              // textAlign: "center",
+              // borderTop: "1px solid #6C757D",
+              // marginTop: "2rem",
+              // padding: ".2rem 0rem",
+              position: "absolute",
+              bottom: '0',
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              textAlign: "center"
             }}
           >
-            <h6 style={{ fontSize: ".9rem" }}>
+            <h6 style={{ fontSize: ".9rem", width: "max-content" }}>
               ABOUT SHEIKH RUSSEL NATIONAL GASTROLIVER INSTITUTE & HOSPITAL
             </h6>
             <p style={{ fontSize: ".8rem", margin: "0" }}>

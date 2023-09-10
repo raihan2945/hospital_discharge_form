@@ -1,0 +1,32 @@
+@media print {
+    .page {
+        /* page-break-after: always; */
+        padding-bottom: 10rem;
+    }
+}
+
+.page-break {
+    page-break-after: always;
+}
+
+/* CSS for the first page */
+@page {
+    margin-top: 30px;
+    /* Set margins to zero for the first page */
+}
+
+/* CSS for subsequent pages (starting from the second page) */
+@page :first {
+    margin-top: 30px;
+    /* Reset margins to zero for subsequent pages */
+}
+
+@page :left {
+    /* margin-left: 20px; */
+    /* Adjust the left margin for left-sided pages */
+}
+
+@page :right {
+    /* margin-right: 20px; */
+    /* Adjust the right margin for right-sided pages */
+}

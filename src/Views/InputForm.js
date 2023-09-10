@@ -230,10 +230,7 @@ const InputForm = () => {
     console.log("data is :", data);
   };
 
-  // console.log("unit is : ", primaryUnit)
-  // console.log("p department is : ", primaryConsultantDepartment);
-
-  // console.log("investigation is : ", investigation);
+ 
   // ------------MEDICATION-----------
 
   const changeMedication = (e, property, index) => {
@@ -523,6 +520,8 @@ const InputForm = () => {
       </div>
     );
   };
+
+  // console.log("dietary advice is is : ", dietaryAdvice)
 
   // ======================================
 
@@ -2310,10 +2309,11 @@ const InputForm = () => {
           defaultMedication={defaultMedication}
           dischargeMedication={dischargeMedication}
           investigation={investigation}
+          procedure={procedure}
           followUp={followUp}
           followUpDate={moment(followUpDate).format("MMM Do YY")}
-          // followUpDate={followUpDate}
-          // dietaryAdvice={dietaryAdvice}
+          advice= {advice}
+          dietaryAdvice={dietaryAdvice}
           ref={componentRef}
         ></PrintPreview>
       </div>
