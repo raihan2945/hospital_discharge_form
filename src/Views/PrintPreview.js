@@ -456,7 +456,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         fontSize: "1rem",
                       }}
                     >
-                      {Number.isInteger(Number(totalDays)) && totalDays}
+                      {Number.isInteger(Number(totalDays)) && (totalDays + " days")}
                     </p>
                   </div>
                 </div>
