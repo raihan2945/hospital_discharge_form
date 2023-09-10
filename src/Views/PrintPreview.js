@@ -1196,7 +1196,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
 
           {/* ------------------------------------------------ */}
 
-          <div
+          {/* <div
             style={{
               // width: "100%",
               // textAlign: "center",
@@ -1220,7 +1220,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
             <p style={{ fontSize: ".8rem", margin: "0" }}>
               www.sheikhrusselgastroliver.gov.bd
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
