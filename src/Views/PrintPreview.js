@@ -65,13 +65,12 @@ const PrintPreview = React.forwardRef((props, ref) => {
           // backgroundColor:"red"
         }}
       >
-        <div className="page" style={{ position: "relative", height:"100%" }}>
+        <div className="page" style={{ position: "relative", height: "100%" }}>
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               gap: "1rem",
-
             }}
           >
             <img
@@ -443,7 +442,8 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         fontSize: "1rem",
                       }}
                     >
-                      {Number.isInteger(Number(totalDays)) && (totalDays + " days")}
+                      {Number.isInteger(Number(totalDays)) &&
+                        totalDays + " days"}
                     </p>
                   </div>
                 </div>
@@ -458,7 +458,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         margin: "0",
                         fontWeight: "500",
                         fontSize: "1rem",
-                        width:"max-content"
+                        width: "max-content",
                       }}
                     >
                       Physical symptoms :
@@ -775,7 +775,79 @@ const PrintPreview = React.forwardRef((props, ref) => {
                 </>
               )}
               {/* ------------------------------------------------ */}
-              <div style={{ pageBreakInside: "avoid",}}>
+              <hr style={{ margin: "0rem 0rem", opacity: "0.00" }} />
+              <div style={{ pageBreakInside: "avoid" }}>
+                {Array.isArray(procedure) && procedure?.length > 0 && (
+                  <>
+                    <hr style={{ margin: ".2rem 0rem", opacity: "0" }} />
+                    <h6 style={{ textAlign: "center" }}>
+                      Procedure / Operation performed :
+                    </h6>
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              Name :
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Note{" "}
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Report{" "}
+                            </p>
+                          </th>
+                          <th scope="col" style={{ textAlign: "start" }}>
+                            <p style={{ fontSize: ".9rem", margin: "0" }}>
+                              {" "}
+                              Date{" "}
+                            </p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {procedure?.map((m) => {
+                          return (
+                            m?.name && (
+                              <tr>
+                                <td style={{ textAlign: "start" }}>
+                                  {" "}
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m?.name}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m?.note}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {m?.report}{" "}
+                                  </p>
+                                </td>
+                                <td style={{ textAlign: "start" }}>
+                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    {`${m?.date}`}{" "}
+                                  </p>
+                                </td>{" "}
+                              </tr>
+                            )
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </>
+                )}
+              </div>
+              {/* ------------------------------------------------ */}
+              <div style={{ pageBreakInside: "avoid" }}>
                 {Array.isArray(drugTreatment) && drugTreatment?.length > 0 && (
                   <>
                     <hr style={{ margin: ".2rem 0rem", opacity: "0" }} />
@@ -925,32 +997,44 @@ const PrintPreview = React.forwardRef((props, ref) => {
                                 <tr>
                                   <td style={{ textAlign: "start" }}>
                                     {" "}
-                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    <p
+                                      style={{ fontSize: ".9rem", margin: "0" }}
+                                    >
                                       {m.brandName}{" "}
                                     </p>
                                   </td>
                                   <td style={{ textAlign: "start" }}>
-                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    <p
+                                      style={{ fontSize: ".9rem", margin: "0" }}
+                                    >
                                       {m.strength}{" "}
                                     </p>
                                   </td>
                                   <td style={{ textAlign: "start" }}>
-                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    <p
+                                      style={{ fontSize: ".9rem", margin: "0" }}
+                                    >
                                       {m.doses}{" "}
                                     </p>
                                   </td>
                                   <td style={{ textAlign: "start" }}>
-                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    <p
+                                      style={{ fontSize: ".9rem", margin: "0" }}
+                                    >
                                       {m.duration}{" "}
                                     </p>
                                   </td>
                                   <td style={{ textAlign: "start" }}>
-                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    <p
+                                      style={{ fontSize: ".9rem", margin: "0" }}
+                                    >
                                       {m.prandial_advice}{" "}
                                     </p>
                                   </td>
                                   <td style={{ textAlign: "start" }}>
-                                    <p style={{ fontSize: ".9rem", margin: "0" }}>
+                                    <p
+                                      style={{ fontSize: ".9rem", margin: "0" }}
+                                    >
                                       {m.note}
                                     </p>
                                   </td>
@@ -963,77 +1047,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                     </>
                   )}
               </div>
-              {/* ------------------------------------------------ */}
-              <hr style={{ margin: "0rem 0rem", opacity: "0.00" }} />
-              <div style={{ pageBreakInside: "avoid" }}>
 
-                {Array.isArray(procedure) && procedure?.length > 0 && (
-                  <>
-                    <hr style={{ margin: ".2rem 0rem", opacity: "0" }} />
-                    <h6 style={{ textAlign: "center" }}>Procedure / Operation performed :</h6>
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th scope="col" style={{ textAlign: "start" }}>
-                            <p style={{ fontSize: ".9rem", margin: "0" }}>
-                              Name :
-                            </p>
-                          </th>
-                          <th scope="col" style={{ textAlign: "start" }}>
-                            <p style={{ fontSize: ".9rem", margin: "0" }}>
-                              {" "}
-                              Note{" "}
-                            </p>
-                          </th>
-                          <th scope="col" style={{ textAlign: "start" }}>
-                            <p style={{ fontSize: ".9rem", margin: "0" }}>
-                              {" "}
-                              Report{" "}
-                            </p>
-                          </th>
-                          <th scope="col" style={{ textAlign: "start" }}>
-                            <p style={{ fontSize: ".9rem", margin: "0" }}>
-                              {" "}
-                              Date{" "}
-                            </p>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {procedure?.map((m) => {
-                          return (
-                            m?.name && (
-                              <tr>
-                                <td style={{ textAlign: "start" }}>
-                                  {" "}
-                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                    {m?.name}{" "}
-                                  </p>
-                                </td>
-                                <td style={{ textAlign: "start" }}>
-                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                    {m?.note}{" "}
-                                  </p>
-                                </td>
-                                <td style={{ textAlign: "start" }}>
-                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                    {m?.report}{" "}
-                                  </p>
-                                </td>
-                                <td style={{ textAlign: "start" }}>
-                                  <p style={{ fontSize: ".9rem", margin: "0" }}>
-                                    {`${m?.date}`}{" "}
-                                  </p>
-                                </td>{" "}
-                              </tr>
-                            )
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </>
-                )}
-              </div>
               {/* ------------------------------------------------------------ */}
               <div className="col-md-6" style={{}}>
                 <div style={{ display: "flex", gap: "1rem" }}>
@@ -1184,9 +1198,14 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         textAlign: "start",
                       }}
                     >
-                      {Array.isArray(dietaryAdvice) && dietaryAdvice?.map((adv, index)=>{
-                        return <span>{index !== 0 && ","} {adv?.value}</span>
-                      })}
+                      {Array.isArray(dietaryAdvice) &&
+                        dietaryAdvice?.map((adv, index) => {
+                          return (
+                            <span>
+                              {index !== 0 && ","} {adv?.value}
+                            </span>
+                          );
+                        })}
                     </p>
                   </div>
                 </div>

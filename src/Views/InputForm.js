@@ -107,25 +107,25 @@ const allDepartments = [
 const allProcedure = [
   {
     id: 1,
-    name: "Endoscopy"
+    name: "Endoscopy",
   },
   {
     id: 2,
-    name: "Colonoscopy"
+    name: "Colonoscopy",
   },
   {
     id: 3,
-    name: "ERCP"
+    name: "ERCP",
   },
   {
     id: 4,
-    name: "Pneumatic Ballon Dilatation"
+    name: "Pneumatic Ballon Dilatation",
   },
   {
     id: 5,
-    name: "Others"
+    name: "Others",
   },
-]
+];
 
 const InputForm = () => {
   // console.log("all medicine is : ", AllMedicine);
@@ -142,7 +142,7 @@ const InputForm = () => {
   const [patientName, setPatientName] = useState("");
   const [patientPhone, setPatientPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [nid, setNid] = useState()
+  const [nid, setNid] = useState();
   const [patinetGender, setPatientGender] = useState("");
   const [age, setAge] = useState();
   const [id, setId] = useState();
@@ -230,7 +230,6 @@ const InputForm = () => {
     console.log("data is :", data);
   };
 
- 
   // ------------MEDICATION-----------
 
   const changeMedication = (e, property, index) => {
@@ -442,16 +441,18 @@ const InputForm = () => {
   // ----------Procedure---------
 
   const addProcedure = async (input) => {
-    const newProcedure = [...procedure, {
-      name: input,
-      note: "",
-      report: "",
-      date: ""
-    }]
+    const newProcedure = [
+      ...procedure,
+      {
+        name: input,
+        note: "",
+        report: "",
+        date: "",
+      },
+    ];
 
-    setProcedure(newProcedure)
+    setProcedure(newProcedure);
   };
-
 
   const removeProcedure = (index) => {
     const newI = [...procedure];
@@ -857,7 +858,7 @@ const InputForm = () => {
                       type="text"
                       // {...register("word_cabin_no")}
                       value={Difference_In_Days && Number(Difference_In_Days)}
-                    // onChange={(e) => setOthersConsultant(e.target.value)}
+                      // onChange={(e) => setOthersConsultant(e.target.value)}
                     />
                   </FormGroup>
                 </Col>
@@ -1396,6 +1397,172 @@ const InputForm = () => {
             </Row> */}
               </div>
 
+              {/* Procedure Oparation performed */}
+              {/* ------------------------------------------------------------------------- */}
+
+              <div
+                style={{
+                  marginTop: ".5rem",
+                  border: "1px solid #CED4DA",
+                  padding: "1rem",
+                  boxShadow: "rgba(0, 0, 0, 0.03) 0px 1px 4px",
+                  backgroundColor: "#f0f7fc",
+                }}
+              >
+                <Row style={{ marginBottom: ".5rem" }}>
+                  <Col sm={4} md={4}>
+                    <div
+                      style={{ textAlign: "start", verticalAlign: "center" }}
+                    >
+                      <label style={{ textAlign: "start", fontWeight: "600" }}>
+                        Procedure / Operation performed :
+                      </label>
+                    </div>
+                  </Col>
+                  <Col sm={8} md={8}>
+                    <select
+                      // value={pro}
+                      onChange={(e) => addProcedure(e.target.value)}
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
+                      <option disabled selected>
+                        Select a value
+                      </option>
+                      {allProcedure?.map((p) => {
+                        return <option value={p.name}>{p.name}</option>;
+                      })}
+                      {/* <option value="ARC 2">ARC 2</option> */}
+                    </select>
+                  </Col>
+                </Row>
+
+                {procedure?.map((proc, index) => {
+                  return (
+                    <Row style={{ alignItems: "center" }}>
+                      <Col md={3}>
+                        <FormGroup>
+                          <div
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
+                          >
+                            <label style={{ textAlign: "start" }}>
+                              Name :{" "}
+                            </label>
+                          </div>
+                          <input
+                            className="form-control"
+                            disabled
+                            value={proc?.name}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col md={3}>
+                        <FormGroup>
+                          <div
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
+                          >
+                            <label style={{ textAlign: "start" }}>Note :</label>
+                          </div>
+
+                          <Input
+                            id="follow_up"
+                            name="follow_up"
+                            // placeholder="Follow Up"
+                            type="text"
+                            // {...register("word_cabin_no")}
+                            value={proc?.note}
+                            onChange={(e) =>
+                              changeProcedure(e.target.value, "note", index)
+                            }
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col md={3}>
+                        <FormGroup>
+                          <div
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
+                          >
+                            <label style={{ textAlign: "start" }}>
+                              Report :
+                            </label>
+                          </div>
+
+                          <Input
+                            id="follow_up"
+                            name="follow_up"
+                            // placeholder="Follow Up"
+                            type="text"
+                            // {...register("word_cabin_no")}
+                            value={proc?.report}
+                            onChange={(e) =>
+                              changeProcedure(e.target.value, "report", index)
+                            }
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col md={2}>
+                        <FormGroup>
+                          <div
+                            style={{
+                              textAlign: "start",
+                              marginBottom: ".5rem",
+                            }}
+                          >
+                            <label style={{ textAlign: "start" }}>Date :</label>
+                          </div>
+
+                          {/* <DatePicker
+                            id="datepicker"
+                            selected={procedureDate}
+                            onChange={setProcedureDate}
+                            formate="dd-mm-yyyy"
+                          /> */}
+                          <input
+                            type="date"
+                            className="form-control"
+                            value={proc?.date}
+                            onChange={(e) =>
+                              changeProcedure(e.target.value, "date", index)
+                            }
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col md={1}>
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginTop: "-1rem",
+                          }}
+                        >
+                          <i
+                            onClick={() => removeProcedure(index)}
+                            class="fas fa-trash"
+                            style={{
+                              marginTop: "30px",
+                              cursor: "pointer",
+                              color: "red",
+                            }}
+                          ></i>
+                        </div>
+                      </Col>
+                    </Row>
+                  );
+                })}
+              </div>
+
               {/* Drug treatment during hospital */}
               <div
                 style={{
@@ -1864,138 +2031,16 @@ const InputForm = () => {
                 </Row>
               </div>
 
-              {/* ------------------------------------------------------------------------- */}
-
-              <div
-                style={{
-                  marginTop: ".5rem",
-                  border: "1px solid #CED4DA",
-                  padding: "1rem",
-                  boxShadow: "rgba(0, 0, 0, 0.03) 0px 1px 4px",
-                  backgroundColor: "#cce4f5",
-                }}
-              >
-                <Row style={{ marginBottom: ".5rem" }}>
-                  <Col sm={4} md={4}>
-                    <div
-                      style={{ textAlign: "start", verticalAlign: "center" }}
-                    >
-                      <label style={{ textAlign: "start", fontWeight: "600" }}>
-                        Procedure / Operation performed :
-                      </label>
-                    </div>
-                  </Col>
-                  <Col sm={8} md={8}>
-                    <select
-                      // value={pro}
-                      onChange={(e) => addProcedure(e.target.value)}
-                      class="form-select"
-                      aria-label="Default select example"
-                    >
-                      <option disabled selected>
-                        Select a value
-                      </option>
-                      {allProcedure?.map((p) => {
-                        return <option value={p.name}>{p.name}</option>;
-                      })}
-                      {/* <option value="ARC 2">ARC 2</option> */}
-                    </select>
-                  </Col>
-                </Row>
-
-                {procedure?.map((proc, index) => {
-                   
-                   return <Row style={{alignItems:"center"}}>
-                      <Col md={3}>
-                        <FormGroup>
-                        <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                            <label style={{ textAlign: "start" }}>Name : </label>
-                          </div>
-                          <input className="form-control" disabled value={proc?.name}/>
-                        </FormGroup>
-                      </Col>
-                      <Col md={3}>
-                        <FormGroup>
-                          <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                            <label style={{ textAlign: "start" }}>Note :</label>
-                          </div>
-
-                          <Input
-                            id="follow_up"
-                            name="follow_up"
-                            // placeholder="Follow Up"
-                            type="text"
-                            // {...register("word_cabin_no")}
-                            value={proc?.note}
-                            onChange={(e) => changeProcedure(e.target.value, 'note', index)}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col md={3}>
-
-                        <FormGroup>
-                          <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                            <label style={{ textAlign: "start" }}>Report :</label>
-                          </div>
-
-                          <Input
-                            id="follow_up"
-                            name="follow_up"
-                            // placeholder="Follow Up"
-                            type="text"
-                            // {...register("word_cabin_no")}
-                            value={proc?.report}
-                            onChange={(e) => changeProcedure(e.target.value, 'report', index)}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col md={2}>
-                        <FormGroup>
-                          <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                            <label style={{ textAlign: "start" }}>Date :</label>
-                          </div>
-
-                          {/* <DatePicker
-                            id="datepicker"
-                            selected={procedureDate}
-                            onChange={setProcedureDate}
-                            formate="dd-mm-yyyy"
-                          /> */}
-                          <input type="date" className="form-control" value={proc?.date} onChange={(e)=>changeProcedure(e.target.value, 'date', index)}/>
-                        </FormGroup>
-                      </Col>
-                      <Col md={1}>
-                        <div
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            marginTop:"-1rem"
-                          }}
-                        >
-                          <i
-                            onClick={() => removeProcedure(index)}
-                            class="fas fa-trash"
-                            style={{
-                              marginTop: "30px",
-                              cursor: "pointer",
-                              color: "red",
-                            }}
-                          ></i>
-                        </div>
-                      </Col>
-                    </Row>
-                 
-                })}
-
-              </div>
-
               {/* --------------------------------- */}
               <Col md={12}>
                 <FormGroup>
-                  <div style={{ textAlign: "start", marginBottom: ".5rem", marginTop: ".5rem" }}>
+                  <div
+                    style={{
+                      textAlign: "start",
+                      marginBottom: ".5rem",
+                      marginTop: ".5rem",
+                    }}
+                  >
                     <label style={{ textAlign: "start" }}>
                       Mode of Discharge :
                     </label>
@@ -2015,7 +2060,7 @@ const InputForm = () => {
                       Referred to other hospital
                     </option>
                     <option value="Referred to other dipertment">
-                    Referred to other department
+                      Referred to other department
                     </option>
                     <option value="Discharge on request">
                       Discharge on request
@@ -2065,9 +2110,7 @@ const InputForm = () => {
                 <Col md={12}>
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                      <label style={{ textAlign: "start" }}>
-                         Advice :
-                      </label>
+                      <label style={{ textAlign: "start" }}>Advice :</label>
                     </div>
 
                     <Input
@@ -2108,7 +2151,10 @@ const InputForm = () => {
                       value={dietaryAdvice}
                       onChange={(value) => setDietaryAdvice(value)}
                       options={[
-                        { value: "দুধ ও দুধ জাতীয় খাবার খাবেন না", label: " দুধ ও দুধ জাতীয় খাবার খাবেন না" },
+                        {
+                          value: "দুধ ও দুধ জাতীয় খাবার খাবেন না",
+                          label: " দুধ ও দুধ জাতীয় খাবার খাবেন না",
+                        },
                         {
                           value: "শাক জাতীয় খাবার খাবেন না",
                           label: "শাক জাতীয় খাবার খাবেন না",
@@ -2132,8 +2178,7 @@ const InputForm = () => {
                         {
                           value: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
                           label: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
-                        }
-
+                        },
                       ]}
                     />
                   </FormGroup>
@@ -2312,7 +2357,7 @@ const InputForm = () => {
           procedure={procedure}
           followUp={followUp}
           followUpDate={moment(followUpDate).format("MMM Do YY")}
-          advice= {advice}
+          advice={advice}
           dietaryAdvice={dietaryAdvice}
           ref={componentRef}
         ></PrintPreview>
