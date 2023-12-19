@@ -748,7 +748,7 @@ const InputForm = () => {
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                       <label style={{ textAlign: "start" }}>
-                        Contact Person Name:
+                        Name of Contact Person :
                       </label>
                     </div>
 
@@ -839,6 +839,7 @@ const InputForm = () => {
                       onChange={(e) => setDateOfDischarge(e)}
                       dateFormat="dd/MM/yyyy"
                       excludeDates={[dateOfAdmission]}
+                      minDate={new Date(dateOfAdmission)}
                     />
                   </FormGroup>
                 </Col>
