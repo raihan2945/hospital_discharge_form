@@ -868,7 +868,7 @@ const InputForm = () => {
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                       <label style={{ textAlign: "start" }}>
-                        Physical symptoms:
+                        Presenting Complains :
                       </label>
                     </div>
 
@@ -943,7 +943,7 @@ const InputForm = () => {
                     <Row>
                       {/* <h1>hello</h1> */}
                       <div style={{ marginBottom: ".5rem" }}>
-                        <h6>Select Primary Consultant</h6>
+                        <h6>Select Department & Consultant : </h6>
                       </div>
                       <Col md={primaryConsultantDepartment?.unit ? 6 : 12}>
                         <FormGroup>
@@ -1065,7 +1065,7 @@ const InputForm = () => {
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                       <label style={{ textAlign: "start" }}>
-                        Others Consultants:
+                        Other Consultant :
                       </label>
                     </div>
 
@@ -1089,44 +1089,42 @@ const InputForm = () => {
                       </label>
                     </div>
 
-                    {/* <CreatableSelect
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      // borderColor: state.isFocused ? 'grey' : 'red',
-                      textAlign: "left",
-                    }),
-                  }}
-                  hideSelectedOptions={false}
-                  closeMenuOnSelect={false}
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  isMulti={true}
-                  name="form-field-name"
-                  isClearable
-                  value={comorbidity}
-                  onChange={(value) => setComorbidity(value)}
-                  options={[
-                    { value: "Hyper Tension", label: "Hyper Tension" },
-                    { value: "Diabetes", label: "Diabetes" },
-                    { value: "Arthritis", label: "Arthritis" },
-                    { value: "Stroke", label: "Stroke" },
-                    { value: "Asthma", label: "Asthma" },
-                    { value: "COPD", label: "COPD" },
-                    { value: "Parkinsonism", label: "Parkinsonism" },
-                    { value: "Psoriasis", label: "Psoriasis" },
-                    { value: "Others", label: "Others" },
-                  ]}
-                /> */}
+                    <CreatableSelect
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          // borderColor: state.isFocused ? 'grey' : 'red',
+                          textAlign: "left",
+                        }),
+                      }}
+                      hideSelectedOptions={false}
+                      closeMenuOnSelect={false}
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      isMulti={true}
+                      name="form-field-name"
+                      isClearable
+                      value={comorbidity}
+                      onChange={(value) => setComorbidity(value)}
+                      options={[
+                        { value: "DM", label: "DM" },
+                        { value: "Hypertension", label: "Hypertension" },
+                        { value: "IHD", label: "IHD" },
+                        { value: "CKD", label: "CKD" },
+                        { value: "Bronchial", label: "Bronchial" },
+                        { value: "Asthma", label: "Asthma" },
+                        { value: "COPD", label: "COPD" }
+                      ]}
+                    />
 
-                    <Input
+                    {/* <Input
                       id="department"
                       name="word_cabin_no"
                       placeholder="Comorbidility"
                       type="text"
                       value={comorbidity}
                       onChange={(e) => setComorbidity(e.target.value)}
-                    />
+                    /> */}
                   </FormGroup>
                 </Col>
                 {/* --------------------------------- */}
@@ -1582,7 +1580,7 @@ const InputForm = () => {
                   drugTreatment.map((m, index) => {
                     return (
                       <Row style={{ marginTop: ".5rem" }}>
-                        <Col md={2}>
+                        <Col md={3}>
                           <div
                             style={{
                               textAlign: "start",
@@ -1632,7 +1630,7 @@ const InputForm = () => {
                             }}
                           />
                         </Col>
-                        <Col md={1}>
+                        <Col md={2}>
                           <div
                             style={{
                               textAlign: "start",
@@ -1719,7 +1717,7 @@ const InputForm = () => {
                             }
                           />
                         </Col>
-                        <Col md={2}>
+                        <Col md={3} style={{position:"relative"}}>
                           <div
                             style={{
                               textAlign: "start",
@@ -1747,9 +1745,18 @@ const InputForm = () => {
                             <option value="Before meal">Before meal</option>
                             <option value="After meal">After meal</option>
                           </select>
+                          <div
+                            style={{ position: "absolute", top: 2, right: 12 }}
+                          >
+                            <i
+                              onClick={() => removeDrugTreatment(index)}
+                              class="fas fa-times"
+                              style={{ color: "red", cursor: "pointer" }}
+                            ></i>
+                          </div>
                         </Col>
                         <Col md={3} style={{ position: "relative" }}>
-                          <div
+                          {/* <div
                             style={{
                               textAlign: "start",
                               marginBottom: ".5rem",
@@ -1771,16 +1778,8 @@ const InputForm = () => {
                             onChange={(e) =>
                               changeDrugTreatment(e.target.value, "note", index)
                             }
-                          />
-                          <div
-                            style={{ position: "absolute", top: 2, right: 12 }}
-                          >
-                            <i
-                              onClick={() => removeDrugTreatment(index)}
-                              class="fas fa-times"
-                              style={{ color: "red", cursor: "pointer" }}
-                            ></i>
-                          </div>
+                          /> */}
+                       
                         </Col>
                       </Row>
                     );
@@ -1805,7 +1804,7 @@ const InputForm = () => {
               >
                 <div style={{ textAlign: "center", marginBottom: "1rem" }}>
                   <label style={{ textAlign: "center", fontWeight: "600" }}>
-                    Discharge Medication :
+                  Discharge Medication (পরবর্তী চিকিৎসা ) : 
                   </label>
                 </div>
                 {dischargeMedication &&
@@ -2160,26 +2159,26 @@ const InputForm = () => {
                           value: "শাক জাতীয় খাবার খাবেন না",
                           label: "শাক জাতীয় খাবার খাবেন না",
                         },
-                        {
-                          value: "ভাজা-পোঁড়া খাবার কম খাবেন",
-                          label: "ভাজা-পোঁড়া খাবার কম খাবেন",
-                        },
-                        {
-                          value: "গমের তৈরি খাবার খাবেন না",
-                          label: "গমের তৈরি খাবার খাবেন না",
-                        },
-                        {
-                          value: "কোন বনাজী ও ভেষজ ওষুধ খাবেন না",
-                          label: "কোন বনাজী ও ভেষজ ওষুধ খাবেন না",
-                        },
+                        // {
+                        //   value: "ভাজা-পোঁড়া খাবার কম খাবেন",
+                        //   label: "ভাজা-পোঁড়া খাবার কম খাবেন",
+                        // },
+                        // {
+                        //   value: "গমের তৈরি খাবার খাবেন না",
+                        //   label: "গমের তৈরি খাবার খাবেন না",
+                        // },
+                        // {
+                        //   value: "কোন বনাজী ও ভেষজ ওষুধ খাবেন না",
+                        //   label: "কোন বনাজী ও ভেষজ ওষুধ খাবেন না",
+                        // },
                         {
                           value: "চর্বি জাতীয় খাবার খাবেন না",
                           label: "চর্বি জাতীয় খাবার খাবেন না",
                         },
-                        {
-                          value: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
-                          label: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
-                        },
+                        // {
+                        //   value: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
+                        //   label: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
+                        // },
                       ]}
                     />
                   </FormGroup>

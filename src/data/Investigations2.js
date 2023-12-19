@@ -45,7 +45,7 @@ export const mainInvestigations = [
     },
     {
         value:12,
-        label:"Endoscopy",
+        label:"Endoscopy of upper GI tract",
     },
     {
         value:13,

@@ -297,7 +297,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         fontSize: "1rem",
                       }}
                     >
-                      Contact Person Name :
+                      Name of Contact Person :
                     </p>
                   </div>
                   <div>
@@ -461,7 +461,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         width: "max-content",
                       }}
                     >
-                      Physical symptoms :
+                      Presenting Complains :
                     </p>
                   </div>
                   <div>
@@ -549,7 +549,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         fontSize: "1rem",
                       }}
                     >
-                      Other Consultants:
+                      Other Consultant :
                     </p>
                   </div>
                   <div>
@@ -614,14 +614,14 @@ const PrintPreview = React.forwardRef((props, ref) => {
                         fontSize: "1rem",
                       }}
                     >
-                      {comorbidity}
-                      {/* {comorbidity?.map((item, index) => {
+                      {/* {comorbidity} */}
+                      {comorbidity?.map((item, index) => {
                         return (
                           <span>
                             {index !== 0 && ","} {item?.label}{" "}
                           </span>
                         );
-                      })} */}
+                      })}
                     </p>
                   </div>
                 </div>
@@ -887,12 +887,12 @@ const PrintPreview = React.forwardRef((props, ref) => {
                               Prandial advice{" "}
                             </p>
                           </th>
-                          <th scope="col" style={{ textAlign: "start" }}>
+                          {/* <th scope="col" style={{ textAlign: "start" }}>
                             <p style={{ fontSize: ".9rem", margin: "0" }}>
                               {" "}
                               Note{" "}
                             </p>
-                          </th>
+                          </th> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -926,11 +926,11 @@ const PrintPreview = React.forwardRef((props, ref) => {
                                     {m.prandial_advice}{" "}
                                   </p>
                                 </td>
-                                <td style={{ textAlign: "start" }}>
+                                {/* <td style={{ textAlign: "start" }}>
                                   <p style={{ fontSize: ".9rem", margin: "0" }}>
                                     {m.note}
                                   </p>
-                                </td>
+                                </td> */}
                               </tr>
                             )
                           );
@@ -947,7 +947,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
                     <>
                       <hr style={{ margin: ".2rem 0rem", opacity: "0" }} />
                       <h6 style={{ textAlign: "center" }}>
-                        Dischage Medication :
+                        Discharge Medication (পরবর্তী চিকিৎসা ) :
                       </h6>
                       <table class="table table-striped">
                         <thead>
@@ -1031,13 +1031,18 @@ const PrintPreview = React.forwardRef((props, ref) => {
                                       {m.prandial_advice}{" "}
                                     </p>
                                   </td>
-                                  <td style={{ textAlign: "start" }}>
-                                    <p
-                                      style={{ fontSize: ".9rem", margin: "0" }}
-                                    >
-                                      {m.note}
-                                    </p>
-                                  </td>
+                                  {/* {m?.note && (
+                                  )} */}
+                                    <td style={{ textAlign: "start" }}>
+                                      <p
+                                        style={{
+                                          fontSize: ".9rem",
+                                          margin: "0",
+                                        }}
+                                      >
+                                        {m.note}
+                                      </p>
+                                    </td>
                                 </tr>
                               )
                             );
