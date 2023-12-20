@@ -1111,8 +1111,7 @@ const InputForm = () => {
                         { value: "Hypertension", label: "Hypertension" },
                         { value: "IHD", label: "IHD" },
                         { value: "CKD", label: "CKD" },
-                        { value: "Bronchial", label: "Bronchial" },
-                        { value: "Asthma", label: "Asthma" },
+                        { value: "Bronchial asthma", label: "Bronchial asthma" },
                         { value: "COPD", label: "COPD" }
                       ]}
                     />
@@ -2175,10 +2174,10 @@ const InputForm = () => {
                           value: "চর্বি জাতীয় খাবার খাবেন না",
                           label: "চর্বি জাতীয় খাবার খাবেন না",
                         },
-                        // {
-                        //   value: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
-                        //   label: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
-                        // },
+                        {
+                          value: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
+                          label: "মিষ্টি ও চিনি জাতীয় খাবার খাবেন না",
+                        },
                       ]}
                     />
                   </FormGroup>
