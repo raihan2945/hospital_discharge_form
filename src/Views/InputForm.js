@@ -571,7 +571,9 @@ const InputForm = () => {
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Row>
-            <Col md={12}>
+            {/* --------------------------------- */}
+
+            <Col md={6}>
               <FormGroup>
                 <div
                   style={{
@@ -582,7 +584,7 @@ const InputForm = () => {
                   }}
                 >
                   <label style={{ textAlign: "start" }}>Discharge ID :</label>
-                  <p style={{ fontWeight: "bold" }}>{discharegeId}</p>
+                  <p style={{ fontWeight: "bold", margin:0}}>{discharegeId}</p>
                 </div>
 
                 {/* <Input
@@ -596,6 +598,42 @@ const InputForm = () => {
                   // {...register("discharege_id")}
                   // value={patientName}
                 /> */}
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <div
+                  style={{
+                    textAlign: "start",
+                    marginBottom: ".5rem",
+                  }}
+                >
+                  <label style={{ textAlign: "start" }}>
+                    Mode of Discharge :
+                  </label>
+                </div>
+
+                <select
+                  value={moodOfDischarge}
+                  onChange={(e) => setMoodOfDischarge(e.target.value)}
+                  class="form-select"
+                  aria-label="Default select example"
+                >
+                  <option value="">Select an option</option>
+                  <option value="Discharge to home">Dishcharge to Home</option>
+                  <option value="Referred to other hospital">
+                    Referred to other hospital
+                  </option>
+                  <option value="Referred to other dipertment">
+                    Referred to other department
+                  </option>
+                  <option value="Discharge on request">
+                    Discharge on request
+                  </option>
+                  <option value="Discharge against medical advice">
+                    Discharge against medical advice
+                  </option>
+                </select>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -651,13 +689,15 @@ const InputForm = () => {
             <Col md={6}>
               <FormGroup>
                 <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                  <label style={{ textAlign: "start" }}>Ward/Cabin No :</label>
+                  <label style={{ textAlign: "start" }}>
+                    Ward/Bed/Cabin No :
+                  </label>
                 </div>
 
                 <Input
                   id="word_cabin_no"
                   name="word_cabin_no"
-                  placeholder="Ward/Cabin No"
+                  placeholder="Ward/Bed/Cabin No"
                   type="text"
                   // {...register("word_cabin_no")}
                   value={wordNo}
@@ -695,13 +735,15 @@ const InputForm = () => {
                 <Col md={6}>
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
-                      <label style={{ textAlign: "start" }}>ID :</label>
+                      <label style={{ textAlign: "start" }}>
+                        Hospital ID :
+                      </label>
                     </div>
 
                     <Input
                       id="id"
                       name="id"
-                      placeholder="ID"
+                      placeholder="Hospital ID"
                       type="text"
                       // {...register("id")}
                       value={id}
@@ -1111,8 +1153,11 @@ const InputForm = () => {
                         { value: "Hypertension", label: "Hypertension" },
                         { value: "IHD", label: "IHD" },
                         { value: "CKD", label: "CKD" },
-                        { value: "Bronchial asthma", label: "Bronchial asthma" },
-                        { value: "COPD", label: "COPD" }
+                        {
+                          value: "Bronchial asthma",
+                          label: "Bronchial asthma",
+                        },
+                        { value: "COPD", label: "COPD" },
                       ]}
                     />
 
@@ -1131,7 +1176,7 @@ const InputForm = () => {
                   <FormGroup>
                     <div style={{ textAlign: "start", marginBottom: ".5rem" }}>
                       <label style={{ textAlign: "start" }}>
-                        Principle Diagnosis :
+                        Primary Diagnosis :
                       </label>
                     </div>
 
@@ -1716,7 +1761,7 @@ const InputForm = () => {
                             }
                           />
                         </Col>
-                        <Col md={3} style={{position:"relative"}}>
+                        <Col md={3} style={{ position: "relative" }}>
                           <div
                             style={{
                               textAlign: "start",
@@ -1778,7 +1823,6 @@ const InputForm = () => {
                               changeDrugTreatment(e.target.value, "note", index)
                             }
                           /> */}
-                       
                         </Col>
                       </Row>
                     );
@@ -1803,7 +1847,7 @@ const InputForm = () => {
               >
                 <div style={{ textAlign: "center", marginBottom: "1rem" }}>
                   <label style={{ textAlign: "center", fontWeight: "600" }}>
-                  Discharge Medication (পরবর্তী চিকিৎসা ) : 
+                    Discharge Medication (পরবর্তী চিকিৎসা ) :
                   </label>
                 </div>
                 {dischargeMedication &&
@@ -2029,47 +2073,6 @@ const InputForm = () => {
                   </Col>
                 </Row>
               </div>
-
-              {/* --------------------------------- */}
-              <Col md={12}>
-                <FormGroup>
-                  <div
-                    style={{
-                      textAlign: "start",
-                      marginBottom: ".5rem",
-                      marginTop: ".5rem",
-                    }}
-                  >
-                    <label style={{ textAlign: "start" }}>
-                      Mode of Discharge :
-                    </label>
-                  </div>
-
-                  <select
-                    value={moodOfDischarge}
-                    onChange={(e) => setMoodOfDischarge(e.target.value)}
-                    class="form-select"
-                    aria-label="Default select example"
-                  >
-                    <option value="">Select an option</option>
-                    <option value="Discharge to home">
-                      Dishcharge to Home
-                    </option>
-                    <option value="Referred to other hospital">
-                      Referred to other hospital
-                    </option>
-                    <option value="Referred to other dipertment">
-                      Referred to other department
-                    </option>
-                    <option value="Discharge on request">
-                      Discharge on request
-                    </option>
-                    <option value="Discharge against medical advice">
-                      Discharge against medical advice
-                    </option>
-                  </select>
-                </FormGroup>
-              </Col>
 
               <Row style={{ marginTop: "1rem" }}>
                 {/* --------------------------------- */}
