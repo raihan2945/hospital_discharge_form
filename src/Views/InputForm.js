@@ -544,7 +544,7 @@ const InputForm = () => {
           marginBottom: "1rem",
         }}
       >
-        <div
+        {/* <div
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -563,11 +563,11 @@ const InputForm = () => {
             style={{ width: "5%", height: "auto", objectFit: "contain" }}
             src="images/bangladesh_logo.png"
           />
-        </div>
+        </div> */}
 
-        <h4 style={{ marginTop: "1.5rem" }}>Discharge Certificate</h4>
+        <h4 style={{fontSize:"1.7rem",fontWeight:"700", textTransform:"uppercase"}}>Discharge Certificate</h4>
 
-        <hr style={{ margin: "1rem 0rem" }} />
+        <hr style={{ margin: "1.5rem 0rem" }} />
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Row>
