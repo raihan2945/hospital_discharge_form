@@ -66,7 +66,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
         }}
       >
         <div className="page" style={{ position: "relative", height: "100%" }}>
-          <div
+          {/* <div
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -85,7 +85,7 @@ const PrintPreview = React.forwardRef((props, ref) => {
               style={{ width: "5%", height: "auto", objectFit: "contain" }}
               src="images/bangladesh_logo.png"
             />
-          </div>
+          </div> */}
 
           {/* <hr style={{ margin: ".4rem 0rem" }} /> */}
           <div style={{ marginTop: "1rem" }}>
